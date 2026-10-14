@@ -1,127 +1,396 @@
+"use client";
+
 import Image from "next/image";
-import { Star, BadgeCheck, Heart, ArrowRight } from "lucide-react";
+import { Star, ShieldCheck, Heart, ArrowRight } from "lucide-react";
+import ScrollReveal from "@/components/ui/ScrollReveal";
 
 export default function Hero() {
   return (
     <>
-      {/* Full-bleed Hero Section */}
+      {/* ─── Hero Section ─── */}
       <section
         id="home"
-        className="pt-24 lg:pt-28 pb-14 lg:pb-16 bg-[#1F3D7C] text-white relative overflow-hidden"
         aria-label="Hero section"
+        className="relative overflow-hidden font-quicksand text-white"
+        style={{
+          backgroundColor: "#203E7D",
+          paddingTop: "clamp(96px, 10vw, 124px)",
+          paddingBottom: "clamp(48px, 6vw, 72px)",
+          isolation: "isolate",
+        }}
       >
-        {/* Soft luminous radial glow in top right matching reference */}
+        {/* Subtle decorative background vector from Figma */}
         <div
-          className="absolute -top-12 -right-12 w-[500px] h-[500px] pointer-events-none rounded-full"
-          style={{
-            background:
-              "radial-gradient(circle at 75% 25%, rgba(186, 230, 253, 0.55) 0%, rgba(56, 189, 248, 0.25) 35%, transparent 70%)",
-          }}
           aria-hidden="true"
+          style={{
+            position: "absolute",
+            left: "20%",
+            right: "20%",
+            top: "30%",
+            bottom: "20%",
+            background: "rgba(0, 69, 39, 0.05)",
+            pointerEvents: "none",
+            zIndex: 0,
+          }}
         />
 
-        <div className="container-main relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
-            {/* Left Content Column — Starts at the left corner */}
-            <div className="lg:col-span-7">
-              <p className="text-xs sm:text-sm font-bold tracking-wider uppercase mb-5 text-[#F4C842]">
+        {/* Main 2-column Container: Full width edge-to-edge */}
+        <div className="w-full px-4 sm:px-6 lg:px-8 flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-12 relative z-10">
+          {/* ── Left Column (Content) ── */}
+          <div
+            style={{
+              flex: "1 1 0%",
+              minWidth: 0,
+              maxWidth: "580px",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "flex-start",
+              gap: "20px",
+            }}
+          >
+            {/* Header Text Group */}
+            <ScrollReveal
+              immediate
+              delay={0}
+              y={16}
+              duration={550}
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "flex-start",
+                gap: "20px",
+                width: "100%",
+              }}
+            >
+              {/* PROACTIVE PET WELLNESS Eyebrow */}
+              <p
+                style={{
+                  fontFamily: "var(--font-quicksand), 'Quicksand', sans-serif",
+                  fontWeight: 600,
+                  fontSize: "14px",
+                  lineHeight: "20px",
+                  letterSpacing: "0.08em",
+                  textTransform: "uppercase",
+                  color: "#F0C051",
+                  margin: 0,
+                }}
+              >
                 PROACTIVE PET WELLNESS
               </p>
 
-              <h1 className="text-4xl sm:text-5xl lg:text-[54px] font-extrabold text-white leading-[1.12] mb-6 tracking-tight">
+              {/* Caring for Your Pets, Every Step of the Way. */}
+              <h1
+                style={{
+                  fontFamily: "var(--font-quicksand), 'Quicksand', sans-serif",
+                  fontWeight: 700,
+                  fontSize: "clamp(32px, 3.8vw, 48px)",
+                  lineHeight: "clamp(40px, 4.6vw, 58px)",
+                  letterSpacing: "-0.02em",
+                  color: "#FFFFFF",
+                  margin: 0,
+                }}
+              >
                 Caring for Your Pets,
                 <br />
-                <span className="text-[#F4C842]">Every Step</span> of the Way.
+                <span className="sm:whitespace-nowrap">
+                  <span style={{ color: "#F0C051" }}>Every Step</span> of the Way.
+                </span>
               </h1>
 
-              <p className="text-white text-base sm:text-lg leading-relaxed mb-9 max-w-xl font-normal opacity-95">
-                From kitten visits to senior care, we provide compassionate,
-                <br className="hidden sm:inline" />
-                modern veterinary services to keep your furry family
-                <br className="hidden sm:inline" />
-                members healthy and happy.
+              {/* From kitten visits to senior care... */}
+              <p
+                style={{
+                  fontFamily: "var(--font-quicksand), 'Quicksand', sans-serif",
+                  fontWeight: 500,
+                  fontSize: "clamp(15px, 1.4vw, 17px)",
+                  lineHeight: "26px",
+                  color: "rgba(255, 255, 255, 0.9)",
+                  margin: 0,
+                  maxWidth: "480px",
+                }}
+              >
+                From kitten visits to senior care, we provide compassionate, modern
+                veterinary services to keep your furry family members healthy and happy.
               </p>
+            </ScrollReveal>
 
-              {/* CTAs */}
-              <div className="flex flex-wrap items-center gap-4">
-                <a
-                  href="#contact"
-                  className="inline-flex items-center gap-2 bg-[#F4C842] hover:bg-[#e6b933] text-[#1F3D7C] font-bold px-7 py-3.5 rounded-full text-base transition-all shadow-sm focus-ring"
-                >
-                  Book an Appointment
-                  <ArrowRight className="w-4 h-4 stroke-[2.5]" aria-hidden="true" />
-                </a>
-                <a
-                  href="#services"
-                  className="inline-flex items-center justify-center bg-[#1F3D7C] border-2 border-white hover:bg-white/10 text-white font-semibold px-7 py-3.5 rounded-full text-base transition-all focus-ring"
-                >
-                  Explore Services
-                </a>
-              </div>
-            </div>
-
-            {/* Right Image Column — Sits flush to the right corner */}
-            <div className="lg:col-span-5 flex justify-center lg:justify-end">
-              <div className="relative w-full max-w-[480px] rounded-[32px] overflow-hidden shadow-2xl bg-[#1F3D7C]">
-                <Image
-                  src="/hero-consultation.png"
-                  alt="Veterinarian with tablet consulting with a pet owner and a large white dog"
-                  width={454}
-                  height={400}
-                  priority
-                  className="w-full h-auto object-cover rounded-[32px]"
+            {/* CTA Buttons */}
+            <ScrollReveal
+              immediate
+              delay={100}
+              y={16}
+              duration={550}
+              style={{
+                paddingTop: "12px",
+                display: "flex",
+                flexWrap: "wrap",
+                alignItems: "center",
+                gap: "14px",
+                width: "100%",
+              }}
+            >
+              {/* Primary Gold CTA */}
+              <a
+                href="#contact"
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  gap: "8px",
+                  padding: "12px 28px",
+                  minHeight: "48px",
+                  backgroundColor: "#F5C842",
+                  color: "#012779",
+                  borderRadius: "9999px",
+                  fontFamily: "var(--font-quicksand), 'Quicksand', sans-serif",
+                  fontWeight: 600,
+                  fontSize: "15px",
+                  lineHeight: "20px",
+                  textDecoration: "none",
+                  whiteSpace: "nowrap",
+                  transition: "all 0.25s ease",
+                  boxShadow: "0 3px 12px rgba(245, 200, 66, 0.3)",
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.backgroundColor = "#eabf34";
+                  e.currentTarget.style.transform = "translateY(-1px)";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.backgroundColor = "#F5C842";
+                  e.currentTarget.style.transform = "translateY(0px)";
+                }}
+              >
+                <span>Book an Appointment</span>
+                <ArrowRight
+                  style={{ width: "15px", height: "15px", strokeWidth: 2.6, color: "#012779" }}
+                  aria-hidden="true"
                 />
-              </div>
-            </div>
+              </a>
+
+              {/* Secondary Outline CTA */}
+              <a
+                href="#services"
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  padding: "12px 28px",
+                  minHeight: "48px",
+                  backgroundColor: "transparent",
+                  color: "#FFFFFF",
+                  border: "2px solid #FFFFFF",
+                  borderRadius: "9999px",
+                  fontFamily: "var(--font-quicksand), 'Quicksand', sans-serif",
+                  fontWeight: 600,
+                  fontSize: "15px",
+                  lineHeight: "20px",
+                  textDecoration: "none",
+                  whiteSpace: "nowrap",
+                  transition: "all 0.25s ease",
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.backgroundColor = "rgba(255, 255, 255, 0.12)";
+                  e.currentTarget.style.transform = "translateY(-1px)";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.backgroundColor = "transparent";
+                  e.currentTarget.style.transform = "translateY(0px)";
+                }}
+              >
+                Explore Services
+              </a>
+            </ScrollReveal>
           </div>
+
+          {/* ── Right Column (Image with Mint Glow Blur & Border) ── */}
+          <ScrollReveal
+            immediate
+            delay={160}
+            y={16}
+            duration={550}
+            className="w-full lg:max-w-[500px] flex justify-center lg:justify-end relative"
+            style={{
+              flex: "1 1 0%",
+              minWidth: 0,
+              isolation: "isolate",
+            }}
+          >
+            {/* Background Mint Glow Blur: #D1F2E5, 120px, blur 20px */}
+            <div
+              aria-hidden="true"
+              style={{
+                position: "absolute",
+                width: "120px",
+                height: "120px",
+                right: "-12px",
+                top: "-12px",
+                background: "#D1F2E5",
+                opacity: 0.55,
+                filter: "blur(20px)",
+                borderRadius: "9999px",
+                zIndex: 0,
+                pointerEvents: "none",
+              }}
+            />
+
+            {/* Rounded Border Box with Image */}
+            <div
+              style={{
+                position: "relative",
+                zIndex: 1,
+                width: "100%",
+                maxWidth: "500px",
+                borderRadius: "24px",
+                border: "3.5px solid rgba(209, 242, 229, 0.25)",
+                boxShadow: "0px 20px 40px -10px rgba(0, 0, 0, 0.25)",
+                overflow: "hidden",
+                backgroundColor: "#203E7D",
+              }}
+            >
+              <Image
+                src="/hero-consultation.png"
+                alt="Veterinarian with tablet consulting with a pet owner and a large white dog"
+                width={520}
+                height={460}
+                priority
+                style={{
+                  width: "100%",
+                  height: "auto",
+                  display: "block",
+                  objectFit: "cover",
+                }}
+              />
+            </div>
+          </ScrollReveal>
         </div>
       </section>
 
-      {/* Golden Trust Strip — Full Bleed, items start from each end */}
+      {/* ─── Golden Trust Strip ─── */}
       <div
-        className="w-full bg-[#F4C842] py-4 sm:py-5 border-t border-[#e2b733]"
+        style={{
+          width: "100%",
+          backgroundColor: "#F5C842",
+          borderTop: "1px solid rgba(0, 69, 39, 0.12)",
+        }}
         aria-label="Trust highlights"
       >
-        <div className="container-main">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-[#1F3D7C]">
-            {/* 500+ Five-Star Reviews — Starts from the left end */}
-            <div className="flex items-center justify-start gap-2.5 py-1">
-              <div className="flex gap-1 text-[#1F3D7C]">
+        <div className="w-full px-4 sm:px-6 lg:px-8 py-3.5 sm:py-4">
+          <ScrollReveal
+            immediate
+            delay={240}
+            y={10}
+            duration={500}
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: "clamp(20px, 4vw, 48px)",
+              flexWrap: "wrap",
+            }}
+          >
+            {/* 500+ Five-Star Reviews */}
+            <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+              <div style={{ display: "flex", gap: "2px" }}>
                 {Array.from({ length: 5 }).map((_, i) => (
                   <Star
                     key={i}
-                    className="w-4 h-4 fill-[#1F3D7C] stroke-none"
+                    style={{
+                      width: "15px",
+                      height: "15px",
+                      fill: "#004527",
+                      stroke: "none",
+                      color: "#004527",
+                    }}
                     aria-hidden="true"
                   />
                 ))}
               </div>
-              <span className="text-sm sm:text-base font-bold text-[#1F3D7C] whitespace-nowrap">
+              <span
+                style={{
+                  fontFamily: "var(--font-quicksand), 'Quicksand', sans-serif",
+                  fontSize: "15px",
+                  fontWeight: 600,
+                  color: "#004527",
+                  whiteSpace: "nowrap",
+                }}
+              >
                 500+ Five-Star Reviews
               </span>
             </div>
 
-            {/* Subtle Divider 1 */}
-            <div className="hidden md:block h-6 w-[1.5px] bg-[#cca229]" aria-hidden="true" />
+            {/* Divider */}
+            <div
+              className="hidden sm:block"
+              style={{
+                height: "20px",
+                width: "1.5px",
+                backgroundColor: "rgba(0, 69, 39, 0.25)",
+                flexShrink: 0,
+              }}
+              aria-hidden="true"
+            />
 
-            {/* Certified Professionals — Positioned in the middle */}
-            <div className="flex items-center justify-center gap-2.5 py-1">
-              <BadgeCheck className="w-5 h-5 text-[#1F3D7C] stroke-[2.2]" aria-hidden="true" />
-              <span className="text-sm sm:text-base font-bold text-[#1F3D7C] whitespace-nowrap">
+            {/* Certified Professionals */}
+            <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+              <ShieldCheck
+                style={{
+                  width: "18px",
+                  height: "18px",
+                  color: "#004527",
+                  strokeWidth: 2.4,
+                }}
+                aria-hidden="true"
+              />
+              <span
+                style={{
+                  fontFamily: "var(--font-quicksand), 'Quicksand', sans-serif",
+                  fontSize: "15px",
+                  fontWeight: 600,
+                  color: "#004527",
+                  whiteSpace: "nowrap",
+                }}
+              >
                 Certified Professionals
               </span>
             </div>
 
-            {/* Subtle Divider 2 */}
-            <div className="hidden md:block h-6 w-[1.5px] bg-[#cca229]" aria-hidden="true" />
+            {/* Divider */}
+            <div
+              className="hidden sm:block"
+              style={{
+                height: "20px",
+                width: "1.5px",
+                backgroundColor: "rgba(0, 69, 39, 0.25)",
+                flexShrink: 0,
+              }}
+              aria-hidden="true"
+            />
 
-            {/* Fear-Free Certified — Ends at the right end */}
-            <div className="flex items-center justify-end gap-2.5 py-1">
-              <Heart className="w-5 h-5 text-[#1F3D7C] stroke-[2.2]" aria-hidden="true" />
-              <span className="text-sm sm:text-base font-bold text-[#1F3D7C] whitespace-nowrap">
+            {/* Fear-Free Certified */}
+            <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+              <Heart
+                style={{
+                  width: "18px",
+                  height: "18px",
+                  color: "#004527",
+                  strokeWidth: 2.4,
+                }}
+                aria-hidden="true"
+              />
+              <span
+                style={{
+                  fontFamily: "var(--font-quicksand), 'Quicksand', sans-serif",
+                  fontSize: "15px",
+                  fontWeight: 600,
+                  color: "#004527",
+                  whiteSpace: "nowrap",
+                }}
+              >
                 Fear-Free Certified
               </span>
             </div>
-          </div>
+          </ScrollReveal>
         </div>
       </div>
     </>

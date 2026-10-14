@@ -1,139 +1,223 @@
-import { MapPin, PhoneCall, Clock } from "lucide-react";
+import Image from "next/image";
+import { MapPin, Phone, Clock } from "lucide-react";
+import ScrollReveal from "@/components/ui/ScrollReveal";
 
 export default function ClinicInfo() {
   return (
     <section
       id="clinic-info"
-      className="py-16 md:py-24 bg-white"
+      className="relative w-full bg-[#FAFDFF] py-14 lg:py-20 scroll-mt-[80px]"
+      style={{ backgroundColor: "#FAFDFF" }}
       aria-labelledby="clinic-heading"
     >
-      <div className="container-main">
-        {/* Header */}
-        <div className="text-center mb-12">
+      <div className="w-full px-4 sm:px-6 lg:px-8 flex flex-col items-center">
+        {/* Header Container */}
+        <ScrollReveal
+          delay={0}
+          y={16}
+          className="w-full text-center mb-10 lg:mb-14 flex flex-col items-center gap-3"
+        >
           <h2
             id="clinic-heading"
-            className="text-3xl md:text-4xl font-extrabold mb-3"
-            style={{ color: "var(--color-primary)" }}
+            className="font-quicksand font-bold text-[#203E7D] text-3xl sm:text-4xl lg:text-[40px] leading-tight text-center"
+            style={{ color: "#203E7D" }}
           >
             Find Us
           </h2>
           <p
-            className="text-base md:text-lg max-w-2xl mx-auto"
-            style={{ color: "var(--color-text-medium)" }}
+            className="font-quicksand font-medium text-base sm:text-[17px] leading-relaxed text-[#404942] text-center max-w-[620px]"
+            style={{ color: "#404942" }}
           >
-            Visit us at our convenient Abu Dhabi location.
+            Visit our modern clinic in the heart of Abu Dhabi.
           </p>
-        </div>
+        </ScrollReveal>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center max-w-6xl mx-auto">
-          {/* Left: Map */}
-          <div className="lg:col-span-7">
-            <div
-              className="rounded-3xl overflow-hidden shadow-sm border border-slate-200"
-              style={{ minHeight: "360px", height: "100%" }}
+        {/* Content Columns: Left Map + Right Contact Info */}
+        <div className="w-full flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-14">
+          {/* Left Column: Map */}
+          <ScrollReveal
+            delay={0}
+            y={16}
+            className="relative w-full lg:max-w-[540px] h-[300px] sm:h-[380px] lg:h-[440px] rounded-[24px] overflow-hidden group shadow-sm flex-shrink-0"
+            style={{
+              borderRadius: "24px",
+              border: "2px solid rgba(209, 242, 229, 0.2)",
+            }}
+          >
+            <a
+              href="https://maps.google.com/?q=Abu+Dhabi"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="View Aleef Veterinary Clinic location on Google Maps"
+              className="block w-full h-full relative"
             >
-              <iframe
-                title="Aleef Veterinary Clinic location map"
-                src="https://www.openstreetmap.org/export/embed.html?bbox=54.3400%2C24.4400%2C54.4000%2C24.4800&layer=mapnik&marker=24.4539%2C54.3773"
-                width="100%"
-                height="360"
-                style={{ border: "none" }}
-                loading="lazy"
-                referrerPolicy="no-referrer"
-                aria-label="Map showing location of Aleef Veterinary Clinic in Abu Dhabi"
+              <Image
+                src="/clinic-map.png"
+                alt="Map showing 123 Pet Lane, Abu Dhabi"
+                fill
+                className="object-cover object-center transition-transform duration-500 group-hover:scale-102"
+                sizes="(max-width: 1024px) 100vw, 540px"
+                priority
               />
-            </div>
-          </div>
+            </a>
+          </ScrollReveal>
 
-          {/* Right: Info Items & Directions Button */}
-          <div className="lg:col-span-5 flex flex-col gap-6 pl-0 lg:pl-4">
-            {/* Location */}
-            <div className="flex items-start gap-4">
-              <div
-                className="w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0"
-                style={{ backgroundColor: "#E0F2FE" }}
-                aria-hidden="true"
-              >
-                <MapPin className="w-6 h-6" style={{ color: "var(--color-blue-accent)" }} />
-              </div>
-              <div>
-                <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1">
-                  Location
-                </p>
-                <p className="font-bold text-base" style={{ color: "var(--color-primary)" }}>
-                  123 Pet Lane, Abu Dhabi
-                </p>
-              </div>
-            </div>
-
-            {/* Phone & Email */}
-            <div className="flex items-start gap-4">
-              <div
-                className="w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0"
-                style={{ backgroundColor: "#E0F2FE" }}
-                aria-hidden="true"
-              >
-                <PhoneCall className="w-6 h-6" style={{ color: "var(--color-blue-accent)" }} />
-              </div>
-              <div>
-                <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1">
-                  Phone &amp; Email
-                </p>
-                <a
-                  href="tel:026747484"
-                  className="block font-bold text-base hover:text-sky-600 transition-colors"
-                  style={{ color: "var(--color-primary)" }}
+          {/* Right Column: Contact Info */}
+          <ScrollReveal
+            delay={80}
+            y={16}
+            className="flex flex-col items-start gap-7 w-full lg:max-w-[580px]"
+          >
+            {/* Info Items List */}
+            <div className="flex flex-col items-start gap-6 w-full">
+              {/* Item 1: Address */}
+              <div className="flex flex-row items-start gap-4 w-full">
+                <div
+                  className="w-[48px] h-[48px] rounded-full flex items-center justify-center flex-shrink-0"
+                  style={{
+                    backgroundColor: "rgba(32, 62, 125, 0.2)",
+                    borderRadius: "9999px",
+                  }}
+                  aria-hidden="true"
                 >
-                  02 674 7484
-                </a>
-                <a
-                  href="mailto:hello@aleefvet.com"
-                  className="block text-sm text-slate-600 hover:text-sky-600 transition-colors mt-0.5"
-                >
-                  hello@aleefvet.com
-                </a>
+                  <MapPin className="w-5 h-5 text-[#203E7D]" />
+                </div>
+                <div className="flex flex-col items-start gap-1">
+                  <h3
+                    className="font-quicksand font-semibold text-base sm:text-[17px] leading-tight text-[#203E7D]"
+                    style={{ color: "#203E7D" }}
+                  >
+                    Address
+                  </h3>
+                  <p
+                    className="font-quicksand font-normal text-[14px] sm:text-[15px] leading-[24px] text-[#404942]"
+                    style={{ color: "#404942" }}
+                  >
+                    123 Pet Lane, Abu Dhabi
+                  </p>
+                </div>
               </div>
-            </div>
 
-            {/* Hours */}
-            <div className="flex items-start gap-4">
-              <div
-                className="w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0"
-                style={{ backgroundColor: "#E0F2FE" }}
-                aria-hidden="true"
-              >
-                <Clock className="w-6 h-6" style={{ color: "var(--color-blue-accent)" }} />
+              {/* Item 2: Phone & Email */}
+              <div className="flex flex-row items-start gap-4 w-full">
+                <div
+                  className="w-[48px] h-[48px] rounded-full flex items-center justify-center flex-shrink-0"
+                  style={{
+                    backgroundColor: "rgba(32, 62, 125, 0.2)",
+                    borderRadius: "9999px",
+                  }}
+                  aria-hidden="true"
+                >
+                  <Phone className="w-5 h-5 text-[#203E7D]" />
+                </div>
+                <div className="flex flex-col items-start gap-1">
+                  <h3
+                    className="font-quicksand font-semibold text-base sm:text-[17px] leading-tight text-[#203E7D]"
+                    style={{ color: "#203E7D" }}
+                  >
+                    Phone &amp; Email
+                  </h3>
+                  <a
+                    href="tel:026747484"
+                    className="font-quicksand font-normal text-[14px] sm:text-[15px] leading-[24px] text-[#404942] hover:text-[#203E7D] transition-colors"
+                    style={{ color: "#404942" }}
+                  >
+                    02 674 7484
+                  </a>
+                  <a
+                    href="mailto:hello@aleefvet.com"
+                    className="font-quicksand font-normal text-[14px] sm:text-[15px] leading-[24px] text-[#404942] hover:text-[#203E7D] transition-colors"
+                    style={{ color: "#404942" }}
+                  >
+                    hello@aleefvet.com
+                  </a>
+                </div>
               </div>
-              <div>
-                <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1">
-                  Opening Hours
-                </p>
-                <div className="text-sm space-y-1">
-                  <p className="font-semibold text-slate-800">
-                    Mon &ndash; Thu: <span className="font-normal text-slate-600">8:00 AM &ndash; 8:00 PM</span>
-                  </p>
-                  <p className="font-semibold text-slate-800">
-                    Saturday: <span className="font-normal text-slate-600">9:00 AM &ndash; 6:00 PM</span>
-                  </p>
-                  <p className="font-semibold text-slate-800">
-                    Friday: <span className="font-medium text-amber-700">Closed</span>
-                  </p>
+
+              {/* Item 3: Opening Hours */}
+              <div className="flex flex-row items-start gap-4 w-full">
+                <div
+                  className="w-[48px] h-[48px] rounded-full flex items-center justify-center flex-shrink-0"
+                  style={{
+                    backgroundColor: "rgba(32, 62, 125, 0.2)",
+                    borderRadius: "9999px",
+                  }}
+                  aria-hidden="true"
+                >
+                  <Clock className="w-5 h-5 text-[#203E7D]" />
+                </div>
+                <div className="flex flex-col items-start gap-1 w-full max-w-[340px]">
+                  <h3
+                    className="font-quicksand font-semibold text-base sm:text-[17px] leading-tight text-[#203E7D]"
+                    style={{ color: "#203E7D" }}
+                  >
+                    Opening Hours
+                  </h3>
+                  <div className="flex flex-col gap-1 w-full pt-1">
+                    {/* Mon - Fri */}
+                    <div className="flex flex-row justify-between items-center w-full">
+                      <span className="font-quicksand font-normal text-[14px] sm:text-[15px] leading-[24px] text-[#404942]">
+                        Mon - Fri:
+                      </span>
+                      <span className="font-quicksand font-normal text-[14px] sm:text-[15px] leading-[24px] text-[#404942]">
+                        8:00 AM - 8:00 PM
+                      </span>
+                    </div>
+
+                    {/* Saturday */}
+                    <div className="flex flex-row justify-between items-center w-full">
+                      <span className="font-quicksand font-normal text-[14px] sm:text-[15px] leading-[24px] text-[#404942]">
+                        Saturday:
+                      </span>
+                      <span className="font-quicksand font-normal text-[14px] sm:text-[15px] leading-[24px] text-[#404942]">
+                        9:00 AM - 5:00 PM
+                      </span>
+                    </div>
+
+                    {/* Sunday */}
+                    <div className="flex flex-row justify-between items-center w-full">
+                      <span className="font-quicksand font-normal text-[14px] sm:text-[15px] leading-[24px] text-[#404942]">
+                        Sunday:
+                      </span>
+                      <span className="font-quicksand font-normal text-[14px] sm:text-[15px] leading-[24px] text-[#404942]">
+                        Closed
+                      </span>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
 
-            {/* Directions Button */}
-            <div className="pt-2">
-              <a
-                href="https://www.google.com/maps/search/?api=1&query=123+Pet+Lane+Abu+Dhabi"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn-navy focus-ring"
-              >
+            {/* Get Directions Button */}
+            <a
+              href="https://maps.google.com/?q=123+Pet+Lane+Abu+Dhabi"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center gap-2 px-7 py-3 bg-[#203E7D] hover:bg-[#183063] text-white rounded-full transition-all duration-300 shadow-sm hover:shadow-md hover:-translate-y-0.5 mt-2"
+              style={{
+                backgroundColor: "#203E7D",
+                borderRadius: "9999px",
+              }}
+            >
+              <span className="font-quicksand font-semibold text-[15px] leading-normal text-white text-center">
                 Get Directions
-              </a>
-            </div>
-          </div>
+              </span>
+              <svg
+                width="14"
+                height="14"
+                viewBox="0 0 16 16"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                className="w-3.5 h-3.5 text-white flex-shrink-0"
+                aria-hidden="true"
+              >
+                <path
+                  d="M8 0L9.414 6.586L16 8L9.414 9.414L8 16L6.586 9.414L0 8L6.586 6.586L8 0Z"
+                  fill="currentColor"
+                />
+              </svg>
+            </a>
+          </ScrollReveal>
         </div>
       </div>
     </section>

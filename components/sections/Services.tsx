@@ -1,41 +1,147 @@
-import { Scissors, Stethoscope, Syringe, Scan, ArrowUpRight } from "lucide-react";
+import ScrollReveal from "@/components/ui/ScrollReveal";
+
+function ScissorsIcon() {
+  return (
+    <svg
+      width="34"
+      height="34"
+      viewBox="0 0 34 34"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className="w-[30px] h-[30px] md:w-[33.75px] md:h-[33.75px] flex-shrink-0"
+      aria-hidden="true"
+    >
+      <circle cx="9" cy="25" r="5" stroke="#02236B" strokeWidth="2.4" />
+      <circle cx="25" cy="25" r="5" stroke="#02236B" strokeWidth="2.4" />
+      <path
+        d="M12.5 21.5L25 6M21.5 21.5L9 6"
+        stroke="#02236B"
+        strokeWidth="2.4"
+        strokeLinecap="round"
+      />
+    </svg>
+  );
+}
+
+function ShieldIcon() {
+  return (
+    <svg
+      width="28"
+      height="34"
+      viewBox="0 0 28 34"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className="w-[24px] h-[30px] md:w-[27px] md:h-[33.75px] flex-shrink-0"
+      aria-hidden="true"
+    >
+      <path
+        d="M14 2L2 6.5V16C2 24.5 7.5 30.5 14 32C20.5 30.5 26 24.5 26 16V6.5L14 2Z"
+        stroke="#C3A333"
+        strokeWidth="2.4"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M14 10V18M10 14H18"
+        stroke="#C3A333"
+        strokeWidth="2.2"
+        strokeLinecap="round"
+      />
+    </svg>
+  );
+}
+
+function BandageIcon() {
+  return (
+    <svg
+      width="34"
+      height="34"
+      viewBox="0 0 34 34"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className="w-[30px] h-[30px] md:w-[33.67px] md:h-[33.67px] flex-shrink-0"
+      aria-hidden="true"
+    >
+      <rect
+        x="5.5"
+        y="12"
+        width="23"
+        height="10"
+        rx="5"
+        transform="rotate(-45 17 17)"
+        stroke="#02236B"
+        strokeWidth="2.4"
+      />
+      <circle cx="17" cy="17" r="1.5" fill="#02236B" />
+      <circle cx="14" cy="14" r="1.5" fill="#02236B" />
+      <circle cx="20" cy="20" r="1.5" fill="#02236B" />
+    </svg>
+  );
+}
+
+function UltrasoundIcon() {
+  return (
+    <svg
+      width="34"
+      height="28"
+      viewBox="0 0 34 28"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className="w-[30px] h-[24px] md:w-[33.75px] md:h-[27px] flex-shrink-0"
+      aria-hidden="true"
+    >
+      <rect
+        x="2"
+        y="2"
+        width="30"
+        height="24"
+        rx="4"
+        stroke="#B08900"
+        strokeWidth="2.4"
+      />
+      <path
+        d="M5 14H10L13 7L17 21L21 11L24 14H29"
+        stroke="#B08900"
+        strokeWidth="2.2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
 
 const services = [
   {
     id: "grooming",
-    icon: Scissors,
+    icon: ScissorsIcon,
+    iconBg: "rgba(2, 35, 107, 0.20)",
     title: "Grooming",
     description:
-      "Professional grooming services to keep your pets looking and feeling their best, from baths to full styling.",
-    iconBg: "#E0F2FE",
-    iconColor: "#0284C7",
+      "Professional grooming services to keep your pet looking and feeling their absolute best.",
   },
   {
     id: "checkup",
-    icon: Stethoscope,
+    icon: ShieldIcon,
+    iconBg: "#FFF2CC",
     title: "Check-up",
     description:
-      "Comprehensive wellness exams to ensure early detection of health issues and promote long-term vitality.",
-    iconBg: "#FEF3C7",
-    iconColor: "#D97706",
+      "Routine wellness exams to catch issues early and ensure long-term health and vitality.",
   },
   {
     id: "surgery",
-    icon: Syringe,
+    icon: BandageIcon,
+    iconBg: "#E5F1FF",
     title: "Surgery",
     description:
-      "State-of-the-art surgical facilities and experienced specialists for routine and complex procedures.",
-    iconBg: "#E0F2FE",
-    iconColor: "#0284C7",
+      "State-of-the-art surgical suites equipped for both routine and complex procedures.",
   },
   {
     id: "ultrasound",
-    icon: Scan,
+    icon: UltrasoundIcon,
+    iconBg: "#FFF2CC",
     title: "Ultrasound",
     description:
-      "Advanced diagnostic ultrasound for non-invasive, detailed imaging of internal organs and tissues.",
-    iconBg: "#FEF3C7",
-    iconColor: "#D97706",
+      "Advanced diagnostic imaging allowing for non- invasive internal examinations.",
   },
 ];
 
@@ -43,72 +149,86 @@ export default function Services() {
   return (
     <section
       id="services"
-      className="py-16 md:py-20"
-      style={{ backgroundColor: "var(--color-bg-light)" }}
+      className="relative w-full bg-[#F0F5FD] py-14 lg:py-20 scroll-mt-[80px]"
+      style={{ backgroundColor: "#F0F5FD" }}
       aria-labelledby="services-heading"
     >
-      <div className="container-main">
+      <div className="w-full px-4 sm:px-6 lg:px-8 flex flex-col items-center">
         {/* Section Header */}
-        <div className="text-center mb-12">
+        <ScrollReveal
+          delay={0}
+          y={16}
+          className="w-full text-center mb-10 lg:mb-14 flex flex-col items-center gap-3"
+        >
           <h2
             id="services-heading"
-            className="text-3xl md:text-4xl font-extrabold mb-3"
-            style={{ color: "var(--color-primary)" }}
+            className="font-quicksand font-bold text-3xl sm:text-4xl lg:text-[40px] leading-tight text-[#203E7D]"
+            style={{ color: "#203E7D" }}
           >
             Comprehensive Care
           </h2>
           <p
-            className="text-base md:text-lg max-w-2xl mx-auto"
-            style={{ color: "var(--color-text-medium)" }}
+            className="font-quicksand font-medium text-base sm:text-[17px] leading-relaxed text-[#404942] max-w-[640px] text-center"
+            style={{ color: "#404942" }}
           >
-            We offer a full spectrum of veterinary services designed to address
-            every aspect of your pet&apos;s health.
+            We offer a full spectrum of veterinary services designed to address every aspect of your pet&apos;s health.
           </p>
-        </div>
+        </ScrollReveal>
 
-        {/* Service Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {services.map((service) => {
+        {/* 4 Cards Grid */}
+        <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 items-stretch">
+          {services.map((service, idx) => {
             const Icon = service.icon;
             return (
-              <article
+              <ScrollReveal
+                as="article"
                 key={service.id}
-                id={`service-${service.id}`}
-                className="bg-white rounded-2xl p-6 border border-slate-100 shadow-sm hover:shadow-md transition-all duration-300 flex flex-col justify-between group"
-                aria-label={`${service.title} service`}
+                id={service.id}
+                delay={idx * 80}
+                y={16}
+                className="bg-white rounded-[24px] p-6 sm:p-7 flex flex-col items-start gap-4 shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1 h-full"
+                style={{
+                  backgroundColor: "#FFFFFF",
+                  border: "1px solid rgba(2, 35, 107, 0.12)",
+                  boxShadow: "0px 4px 20px rgba(27, 94, 59, 0.04)",
+                  borderRadius: "24px",
+                }}
+                aria-label={service.title}
               >
-                <div>
-                  {/* Top: Icon & Arrow */}
-                  <div className="flex items-center justify-between mb-6">
-                    <div
-                      className="w-12 h-12 rounded-full flex items-center justify-center transition-transform duration-300 group-hover:scale-110"
-                      style={{ backgroundColor: service.iconBg }}
-                      aria-hidden="true"
-                    >
-                      <Icon
-                        className="w-6 h-6"
-                        style={{ color: service.iconColor }}
-                      />
-                    </div>
-                    <div className="w-8 h-8 rounded-full flex items-center justify-center text-slate-300 group-hover:text-sky-600 transition-colors">
-                      <ArrowUpRight className="w-5 h-5" aria-hidden="true" />
-                    </div>
-                  </div>
+                {/* Icon Circle */}
+                <div
+                  className="w-[64px] h-[64px] rounded-full flex items-center justify-center flex-shrink-0"
+                  style={{
+                    backgroundColor: service.iconBg,
+                    width: "64px",
+                    height: "64px",
+                    borderRadius: "9999px",
+                  }}
+                  aria-hidden="true"
+                >
+                  <Icon />
+                </div>
 
+                {/* Heading 3 */}
+                <div className="pt-1 w-full">
                   <h3
-                    className="font-bold text-xl mb-3"
-                    style={{ color: "var(--color-blue-accent)" }}
+                    className="font-quicksand font-semibold text-lg sm:text-[20px] leading-snug text-[#009AE8]"
+                    style={{ color: "#009AE8" }}
                   >
                     {service.title}
                   </h3>
+                </div>
+
+                {/* Description */}
+                <div className="w-full flex-grow">
                   <p
-                    className="text-sm leading-relaxed"
-                    style={{ color: "var(--color-text-medium)" }}
+                    className="font-quicksand font-normal text-[14px] sm:text-[15px] leading-[23px] text-[#404942]"
+                    style={{ color: "#404942" }}
                   >
                     {service.description}
                   </p>
                 </div>
-              </article>
+              </ScrollReveal>
             );
           })}
         </div>

@@ -1,144 +1,212 @@
 import Link from "next/link";
 import { PawPrint, MapPin, Phone, Mail } from "lucide-react";
+import ScrollReveal from "@/components/ui/ScrollReveal";
 
 export default function Footer() {
-  const currentYear = 2026;
-
   return (
     <footer
-      className="bg-white border-t border-slate-200 text-slate-600"
+      className="relative w-full bg-[#FAFDFF] pt-12 lg:pt-16 pb-8"
+      style={{ backgroundColor: "#FAFDFF" }}
       role="contentinfo"
     >
-      {/* Main Footer Content */}
-      <div className="container-main py-14">
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-10">
-          {/* Column 1: Brand */}
-          <div className="md:col-span-5">
-            <div className="flex items-center gap-2 mb-4">
-              <div
-                className="w-8 h-8 rounded-full flex items-center justify-center"
-                style={{ backgroundColor: "var(--color-primary)" }}
-                aria-hidden="true"
-              >
-                <PawPrint className="w-4 h-4 text-white" />
-              </div>
-              <div className="flex flex-col leading-tight">
-                <span
-                  className="font-extrabold text-lg tracking-tight"
-                  style={{ color: "var(--color-primary)" }}
-                >
-                  Aleef
-                </span>
-                <span
-                  className="text-xs font-semibold tracking-widest uppercase"
-                  style={{ color: "var(--color-text-light)" }}
-                >
-                  Veterinary
-                </span>
-              </div>
+      <div className="w-full px-4 sm:px-6 lg:px-8 flex flex-col gap-10 lg:gap-12">
+        {/* Main 4 Columns with exact proportional gap spanning corner to corner */}
+        <ScrollReveal
+          delay={0}
+          y={16}
+          className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-10 xl:gap-12 items-start"
+        >
+          {/* Column 1: Brand & Tagline */}
+          <div className="flex flex-col items-start gap-3.5">
+            {/* Logo */}
+            <div className="flex flex-row items-center gap-2.5">
+              <PawPrint className="w-6 h-6 text-[#203E7D] flex-shrink-0" />
+              <span className="font-quicksand font-bold text-lg text-[#203E7D]">
+                Aleef Veterinary
+              </span>
             </div>
-            <p className="text-sm text-slate-500 leading-relaxed max-w-sm">
-              Comprehensive and compassionate veterinary care for your beloved pets
-              in Abu Dhabi.
+
+            {/* Tagline */}
+            <p className="font-quicksand font-normal text-sm sm:text-[15px] leading-[23px] text-[#404942]">
+              Compassionate care for every family member. We are dedicated to providing the
+              highest standard of veterinary medicine.
             </p>
           </div>
 
-          {/* Column 2: Contact */}
-          <div className="md:col-span-4">
-            <h3
-              className="font-bold text-base mb-3"
-              style={{ color: "var(--color-primary)" }}
-            >
+          {/* Column 2: Quick Links */}
+          <div className="flex flex-col items-start gap-3.5">
+            <h3 className="font-quicksand font-semibold text-lg sm:text-[20px] leading-tight text-[#203E7D]">
+              Quick Links
+            </h3>
+
+            <ul className="flex flex-col gap-2.5 w-full font-quicksand text-sm sm:text-[15px] text-[#404942]">
+              <li>
+                <Link
+                  href="#home"
+                  className="hover:text-[#203E7D] transition-colors"
+                >
+                  Home
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="#about"
+                  className="hover:text-[#203E7D] transition-colors"
+                >
+                  About Us
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="#services"
+                  className="hover:text-[#203E7D] transition-colors"
+                >
+                  Services
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="#team"
+                  className="hover:text-[#203E7D] transition-colors"
+                >
+                  Our Team
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="#contact"
+                  className="hover:text-[#203E7D] transition-colors"
+                >
+                  Contact
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* Column 3: Contact */}
+          <div className="flex flex-col items-start gap-3.5">
+            <h3 className="font-quicksand font-semibold text-lg sm:text-[20px] leading-tight text-[#203E7D]">
               Contact
             </h3>
-            <ul className="space-y-2 text-sm text-slate-600" aria-label="Contact information">
-              <li className="flex items-center gap-2">
-                <MapPin className="w-4 h-4 text-slate-400 flex-shrink-0" aria-hidden="true" />
-                <span>123 Pet Lane, Abu Dhabi</span>
-              </li>
-              <li className="flex items-center gap-2">
-                <Phone className="w-4 h-4 text-slate-400 flex-shrink-0" aria-hidden="true" />
+
+            <div className="flex flex-col gap-2.5 w-full">
+              {/* Address */}
+              <div className="flex flex-row items-center gap-2.5">
+                <MapPin className="w-4 h-4 text-[#404942] flex-shrink-0" />
+                <span className="font-quicksand font-normal text-sm sm:text-[15px] leading-snug text-[#404942]">
+                  123 Pet Lane, Abu Dhabi
+                </span>
+              </div>
+
+              {/* Phone */}
+              <div className="flex flex-row items-center gap-2.5">
+                <Phone className="w-4 h-4 text-[#404942] flex-shrink-0" />
                 <a
                   href="tel:026747484"
-                  className="hover:text-sky-600 transition-colors"
+                  className="font-quicksand font-normal text-sm sm:text-[15px] leading-snug text-[#404942] hover:text-[#203E7D] transition-colors"
                 >
                   02 674 7484
                 </a>
-              </li>
-              <li className="flex items-center gap-2">
-                <Mail className="w-4 h-4 text-slate-400 flex-shrink-0" aria-hidden="true" />
+              </div>
+
+              {/* Email */}
+              <div className="flex flex-row items-center gap-2.5">
+                <Mail className="w-4 h-4 text-[#404942] flex-shrink-0" />
                 <a
                   href="mailto:hello@aleefvet.com"
-                  className="hover:text-sky-600 transition-colors"
+                  className="font-quicksand font-normal text-sm sm:text-[15px] leading-snug text-[#404942] hover:text-[#203E7D] transition-colors"
                 >
                   hello@aleefvet.com
                 </a>
-              </li>
-            </ul>
+              </div>
+            </div>
           </div>
 
-          {/* Column 3: Hours */}
-          <div className="md:col-span-3">
-            <h3
-              className="font-bold text-base mb-3"
-              style={{ color: "var(--color-primary)" }}
-            >
+          {/* Column 4: Hours */}
+          <div className="flex flex-col items-start gap-3.5 w-full">
+            <h3 className="font-quicksand font-semibold text-lg sm:text-[20px] leading-tight text-[#203E7D]">
               Hours
             </h3>
-            <ul className="space-y-1.5 text-sm text-slate-600" aria-label="Opening hours">
-              <li className="flex justify-between sm:justify-start sm:gap-4">
-                <span className="font-medium text-slate-700">Mon &ndash; Thu:</span>
-                <span>8:00 AM &ndash; 8:00 PM</span>
-              </li>
-              <li className="flex justify-between sm:justify-start sm:gap-4">
-                <span className="font-medium text-slate-700">Saturday:</span>
-                <span>9:00 AM &ndash; 6:00 PM</span>
-              </li>
-              <li className="flex justify-between sm:justify-start sm:gap-4">
-                <span className="font-medium text-slate-700">Friday:</span>
-                <span className="text-amber-700 font-medium">Closed</span>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
 
-      {/* Bottom Bar */}
-      <div className="border-t border-slate-100 py-6 bg-slate-50/50">
-        <div className="container-main flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-slate-500">
-          <p>
-            &copy; {currentYear} Aleef Veterinary Clinic. All rights reserved.
+            <div className="flex flex-col gap-2 w-full">
+              {/* Mon - Fri */}
+              <div className="flex flex-row justify-between items-center w-full">
+                <span className="font-quicksand font-normal text-sm sm:text-[15px] text-[#404942]">
+                  Mon - Fri:
+                </span>
+                <span className="font-quicksand font-normal text-sm sm:text-[15px] text-[#404942]">
+                  8:00 AM - 8:00 PM
+                </span>
+              </div>
+
+              {/* Saturday */}
+              <div className="flex flex-row justify-between items-center w-full">
+                <span className="font-quicksand font-normal text-sm sm:text-[15px] text-[#404942]">
+                  Saturday:
+                </span>
+                <span className="font-quicksand font-normal text-sm sm:text-[15px] text-[#404942]">
+                  9:00 AM - 5:00 PM
+                </span>
+              </div>
+
+              {/* Sunday */}
+              <div className="flex flex-row justify-between items-center w-full">
+                <span className="font-quicksand font-normal text-sm sm:text-[15px] text-[#404942]">
+                  Sunday:
+                </span>
+                <span className="font-quicksand font-normal text-sm sm:text-[15px] text-[#404942]">
+                  Closed
+                </span>
+              </div>
+            </div>
+          </div>
+        </ScrollReveal>
+
+        {/* Bottom Horizontal Border & Links Bar */}
+        <ScrollReveal
+          delay={80}
+          y={12}
+          className="pt-6 flex flex-col sm:flex-row justify-between items-center gap-4 w-full"
+          style={{
+            borderTop: "1px solid rgba(191, 201, 191, 0.3)",
+          }}
+        >
+          {/* Copyright */}
+          <p className="font-quicksand font-normal text-xs sm:text-[13px] text-[#404942] text-center sm:text-left">
+            &copy; 2026 Aleef Veterinary Clinic. Compassionate care for every family member.
           </p>
-          <nav className="flex flex-wrap items-center gap-x-4 gap-y-1" aria-label="Legal navigation">
+
+          {/* 4 Legal Links with exact proportional gap */}
+          <nav
+            className="flex flex-wrap items-center justify-center sm:justify-end gap-6 sm:gap-8"
+            aria-label="Footer navigation"
+          >
             <Link
               href="/privacy-policy"
-              className="hover:text-slate-900 transition-colors"
+              className="font-quicksand font-normal text-xs sm:text-[13px] text-[#404942] hover:text-[#203E7D] transition-colors"
             >
               Privacy Policy
             </Link>
-            <span aria-hidden="true">&bull;</span>
             <Link
               href="/terms"
-              className="hover:text-slate-900 transition-colors"
+              className="font-quicksand font-normal text-xs sm:text-[13px] text-[#404942] hover:text-[#203E7D] transition-colors"
             >
               Terms of Service
             </Link>
-            <span aria-hidden="true">&bull;</span>
             <Link
               href="/faq"
-              className="hover:text-slate-900 transition-colors"
+              className="font-quicksand font-normal text-xs sm:text-[13px] text-[#404942] hover:text-[#203E7D] transition-colors"
             >
               FAQ
             </Link>
-            <span aria-hidden="true">&bull;</span>
             <Link
-              href="/faq#emergency"
-              className="hover:text-slate-900 transition-colors"
+              href="#contact"
+              className="font-quicksand font-normal text-xs sm:text-[13px] text-[#404942] hover:text-[#203E7D] transition-colors"
             >
               Emergency Care
             </Link>
           </nav>
-        </div>
+        </ScrollReveal>
       </div>
     </footer>
   );

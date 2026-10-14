@@ -3,8 +3,9 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
-import { Send, CheckCircle, AlertCircle, Loader2 } from "lucide-react";
+import { Headset, CheckCircle, AlertCircle, Loader2, ChevronDown } from "lucide-react";
 import { contactSchema, type ContactFormData } from "@/lib/validation";
+import ScrollReveal from "@/components/ui/ScrollReveal";
 
 const serviceOptions = [
   { value: "grooming", label: "Grooming" },
@@ -26,6 +27,9 @@ export default function Contact() {
     reset,
   } = useForm<ContactFormData>({
     resolver: zodResolver(contactSchema),
+    defaultValues: {
+      service: "grooming",
+    },
     mode: "onBlur",
   });
 
@@ -44,13 +48,13 @@ export default function Contact() {
 
       if (response.ok && json.success) {
         setSubmitStatus("success");
-        setServerMessage(json.message ?? "Message sent successfully!");
+        setServerMessage(json.message ?? "Message sent successfully! We will get back to you shortly.");
         reset();
       } else {
         setSubmitStatus("error");
         setServerMessage(
           json.message ??
-            "Something went wrong. Please try again or contact us directly."
+            "Something went wrong. Please try again or contact us directly at 02 674 7484."
         );
       }
     } catch {
@@ -61,364 +65,281 @@ export default function Contact() {
     }
   };
 
-  const inputClass = (hasError?: boolean) =>
-    `w-full px-4 py-3 rounded-xl border text-sm transition-all duration-200 focus:ring-2 focus:ring-[var(--color-primary)] focus:border-[var(--color-primary)] outline-none ${
-      hasError
-        ? "border-red-400 bg-red-50"
-        : "border-[var(--color-border)] bg-white hover:border-[var(--color-primary-light)]"
-    }`;
-
   return (
     <section
       id="contact"
-      className="py-16 md:py-24"
-      style={{ backgroundColor: "var(--color-bg-light)" }}
+      className="relative w-full bg-[#ECF3FF] py-14 lg:py-20 scroll-mt-[80px]"
+      style={{ backgroundColor: "#ECF3FF" }}
       aria-labelledby="contact-heading"
     >
-      <div className="container-main">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-14 items-start">
-          {/* Left — Header & Emergency Care Callout */}
-          <div className="pt-2">
+      <div className="w-full px-4 sm:px-6 lg:px-8">
+        <div className="flex flex-col lg:flex-row items-center justify-between gap-10 lg:gap-16">
+          {/* Left Column: Heading, Subtitle & Expert Support Card */}
+          <ScrollReveal
+            delay={0}
+            y={16}
+            className="flex flex-col items-start gap-5 lg:gap-6 w-full lg:max-w-[560px]"
+          >
+            {/* Heading */}
             <h2
               id="contact-heading"
-              className="text-3xl sm:text-4xl font-extrabold mb-4 leading-tight"
-              style={{ color: "var(--color-primary)" }}
+              className="font-quicksand font-bold text-[#203E7D] text-3xl sm:text-4xl lg:text-[40px] leading-tight"
+              style={{ color: "#203E7D" }}
             >
               Have a Question? Get in Touch
             </h2>
+
+            {/* Subtitle */}
             <p
-              className="text-base leading-relaxed mb-8 text-slate-600"
+              className="font-quicksand font-medium text-base sm:text-[17px] leading-relaxed text-[#404942]"
+              style={{ color: "#404942" }}
             >
-              Have a question or need to schedule an appointment? Fill out the
-              form and our team will get back to you within 24 hours.
+              We&apos;re here to help you and your furry friends. Fill out the form, and
+              our team will get back to you as soon as possible.
             </p>
 
-            {/* Emergency Care Callout Box */}
+            {/* Expert Support Card */}
             <div
-              className="p-6 rounded-2xl border"
+              className="w-full flex flex-col items-start p-6 sm:p-7 gap-3.5 rounded-[24px] mt-2"
               style={{
-                backgroundColor: "#EBF3FA",
-                borderColor: "#D0E2F2",
+                backgroundColor: "rgba(200, 211, 234, 0.21)",
+                border: "1px solid rgba(209, 242, 229, 0.2)",
+                borderRadius: "24px",
               }}
             >
-              <div className="flex items-center gap-3 mb-2">
-                <div
-                  className="w-8 h-8 rounded-full flex items-center justify-center"
-                  style={{ backgroundColor: "#2B4F91" }}
-                  aria-hidden="true"
-                >
-                  <AlertCircle className="w-5 h-5 text-white" />
-                </div>
+              <div className="flex flex-row items-center gap-3">
+                <Headset className="w-6 h-6 text-[#203E7D] flex-shrink-0" />
                 <h3
-                  className="font-bold text-base"
-                  style={{ color: "var(--color-primary)" }}
+                  className="font-quicksand font-semibold text-base sm:text-[18px] leading-tight text-[#203E7D]"
+                  style={{ color: "#203E7D" }}
                 >
-                  Emergency Care
+                  Expert Support
                 </h3>
               </div>
-              <p className="text-sm text-slate-700 leading-relaxed">
-                For life-threatening emergencies during open hours, please call us
-                directly at{" "}
-                <a
-                  href="tel:026747484"
-                  className="font-bold text-sky-700 underline hover:text-sky-900"
-                >
-                  02 674 7484
-                </a>{" "}
-                for immediate assistance.
+              <p
+                className="font-quicksand font-normal text-[14px] sm:text-[15px] leading-[23px] text-[#404942]"
+                style={{ color: "#404942" }}
+              >
+                Our dedicated team of veterinary professionals is ready to answer your
+                questions about our services and pet care.
               </p>
             </div>
-          </div>
+          </ScrollReveal>
 
-          {/* Right — Form */}
-          <div
-            className="bg-white rounded-3xl p-7 md:p-9 shadow-sm"
-            style={{ border: "1px solid var(--color-border)" }}
+          {/* Right Column: Contact Form Card */}
+          <ScrollReveal
+            delay={80}
+            y={16}
+            className="w-full lg:max-w-[580px] bg-white rounded-[24px] p-6 sm:p-8 lg:p-9 relative flex-shrink-0"
+            style={{
+              backgroundColor: "#FFFFFF",
+              border: "1px solid #D1F2E5",
+              borderRadius: "24px",
+              boxShadow:
+                "0px 16px 28px -6px rgba(0, 0, 0, 0.08), 0px 8px 12px -6px rgba(0, 0, 0, 0.06)",
+            }}
           >
-            {/* Success state */}
+            {/* Feedback alert messages */}
             {submitStatus === "success" && (
               <div
-                className="flex items-start gap-3 p-4 rounded-xl mb-6"
-                style={{ backgroundColor: "#e8f5e9", border: "1px solid #a5d6a7" }}
-                role="alert"
-                aria-live="polite"
+                className="mb-5 p-3.5 rounded-xl flex items-center gap-2.5 bg-emerald-50 border border-emerald-200 text-emerald-800 text-sm font-medium"
+                role="status"
               >
-                <CheckCircle
-                  className="w-5 h-5 flex-shrink-0 mt-0.5 text-green-600"
-                  aria-hidden="true"
-                />
-                <p className="text-green-800 text-sm font-medium">
-                  {serverMessage}
-                </p>
+                <CheckCircle className="w-5 h-5 flex-shrink-0 text-emerald-600" />
+                <p>{serverMessage}</p>
               </div>
             )}
 
-            {/* Error state */}
             {submitStatus === "error" && (
               <div
-                className="flex items-start gap-3 p-4 rounded-xl mb-6"
-                style={{ backgroundColor: "#fff3f3", border: "1px solid #f5c6cb" }}
+                className="mb-5 p-3.5 rounded-xl flex items-center gap-2.5 bg-rose-50 border border-rose-200 text-rose-800 text-sm font-medium"
                 role="alert"
-                aria-live="polite"
               >
-                <AlertCircle
-                  className="w-5 h-5 flex-shrink-0 mt-0.5 text-red-600"
-                  aria-hidden="true"
-                />
-                <p className="text-red-800 text-sm font-medium">
-                  {serverMessage}
-                </p>
+                <AlertCircle className="w-5 h-5 flex-shrink-0 text-rose-600" />
+                <p>{serverMessage}</p>
               </div>
             )}
 
             <form
               onSubmit={handleSubmit(onSubmit)}
               noValidate
-              aria-label="Contact and appointment booking form"
+              className="flex flex-col gap-4 w-full"
             >
-              {/* Honeypot field — hidden from users */}
-              <div
-                aria-hidden="true"
-                style={{
-                  position: "absolute",
-                  left: "-9999px",
-                  top: "-9999px",
-                  opacity: 0,
-                  height: 0,
-                  overflow: "hidden",
-                }}
-              >
-                <label htmlFor="website">Website</label>
-                <input
-                  id="website"
-                  type="text"
-                  tabIndex={-1}
-                  autoComplete="off"
-                  {...register("website")}
-                />
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                {/* Owner Name */}
-                <div>
+              {/* Row 1: Pet Owner's Name + Email Address */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full">
+                {/* Pet Owner's Name */}
+                <div className="flex flex-col gap-1.5">
                   <label
                     htmlFor="ownerName"
-                    className="block text-sm font-semibold mb-1.5"
-                    style={{ color: "var(--color-text-dark)" }}
+                    className="font-quicksand font-semibold text-[13px] sm:text-[14px] leading-tight text-[#203E7D]"
+                    style={{ color: "#203E7D" }}
                   >
-                    Your Name{" "}
-                    <span aria-label="required" style={{ color: "#c0392b" }}>
-                      *
-                    </span>
+                    Pet Owner&apos;s Name
                   </label>
                   <input
                     id="ownerName"
                     type="text"
-                    autoComplete="name"
                     placeholder="Your Name"
-                    className={inputClass(!!errors.ownerName)}
-                    aria-required="true"
-                    aria-describedby={
-                      errors.ownerName ? "ownerName-error" : undefined
-                    }
                     {...register("ownerName")}
+                    className={`w-full h-[46px] sm:h-[48px] px-4 rounded-full bg-white font-quicksand text-sm sm:text-[15px] placeholder:text-[#6B7280] text-[#191C19] outline-none transition-colors border ${
+                      errors.ownerName
+                        ? "border-red-400 focus:border-red-500"
+                        : "border-[rgba(191,201,191,0.5)] focus:border-[#203E7D]"
+                    }`}
                   />
                   {errors.ownerName && (
-                    <p
-                      id="ownerName-error"
-                      className="mt-1.5 text-xs text-red-600 flex items-center gap-1"
-                      role="alert"
-                    >
-                      <AlertCircle className="w-3 h-3" aria-hidden="true" />
+                    <span className="text-xs text-red-500 font-medium px-2">
                       {errors.ownerName.message}
-                    </p>
+                    </span>
                   )}
                 </div>
 
-                {/* Email */}
-                <div>
+                {/* Email Address */}
+                <div className="flex flex-col gap-1.5">
                   <label
                     htmlFor="email"
-                    className="block text-sm font-semibold mb-1.5"
-                    style={{ color: "var(--color-text-dark)" }}
+                    className="font-quicksand font-semibold text-[13px] sm:text-[14px] leading-tight text-[#203E7D]"
+                    style={{ color: "#203E7D" }}
                   >
-                    Email Address{" "}
-                    <span aria-label="required" style={{ color: "#c0392b" }}>
-                      *
-                    </span>
+                    Email Address
                   </label>
                   <input
                     id="email"
                     type="email"
-                    autoComplete="email"
-                    placeholder="you@example.com"
-                    className={inputClass(!!errors.email)}
-                    aria-required="true"
-                    aria-describedby={errors.email ? "email-error" : undefined}
+                    placeholder="your@email.com"
                     {...register("email")}
+                    className={`w-full h-[46px] sm:h-[48px] px-4 rounded-full bg-white font-quicksand text-sm sm:text-[15px] placeholder:text-[#6B7280] text-[#191C19] outline-none transition-colors border ${
+                      errors.email
+                        ? "border-red-400 focus:border-red-500"
+                        : "border-[rgba(191,201,191,0.5)] focus:border-[#203E7D]"
+                    }`}
                   />
                   {errors.email && (
-                    <p
-                      id="email-error"
-                      className="mt-1.5 text-xs text-red-600 flex items-center gap-1"
-                      role="alert"
-                    >
-                      <AlertCircle className="w-3 h-3" aria-hidden="true" />
+                    <span className="text-xs text-red-500 font-medium px-2">
                       {errors.email.message}
-                    </p>
-                  )}
-                </div>
-
-                {/* Pet Name */}
-                <div>
-                  <label
-                    htmlFor="petName"
-                    className="block text-sm font-semibold mb-1.5"
-                    style={{ color: "var(--color-text-dark)" }}
-                  >
-                    Pet&apos;s Name{" "}
-                    <span aria-label="required" style={{ color: "#c0392b" }}>
-                      *
                     </span>
-                  </label>
-                  <input
-                    id="petName"
-                    type="text"
-                    placeholder="Your pet's name"
-                    className={inputClass(!!errors.petName)}
-                    aria-required="true"
-                    aria-describedby={
-                      errors.petName ? "petName-error" : undefined
-                    }
-                    {...register("petName")}
-                  />
-                  {errors.petName && (
-                    <p
-                      id="petName-error"
-                      className="mt-1.5 text-xs text-red-600 flex items-center gap-1"
-                      role="alert"
-                    >
-                      <AlertCircle className="w-3 h-3" aria-hidden="true" />
-                      {errors.petName.message}
-                    </p>
-                  )}
-                </div>
-
-                {/* Service */}
-                <div className="sm:col-span-2">
-                  <label
-                    htmlFor="service"
-                    className="block text-sm font-semibold mb-1.5"
-                    style={{ color: "var(--color-text-dark)" }}
-                  >
-                    Service Needed{" "}
-                    <span aria-label="required" style={{ color: "#c0392b" }}>
-                      *
-                    </span>
-                  </label>
-                  <select
-                    id="service"
-                    className={`${inputClass(!!errors.service)} appearance-none`}
-                    aria-required="true"
-                    aria-describedby={
-                      errors.service ? "service-error" : undefined
-                    }
-                    {...register("service")}
-                    defaultValue=""
-                  >
-                    <option value="" disabled>
-                      Select a service…
-                    </option>
-                    {serviceOptions.map((opt) => (
-                      <option key={opt.value} value={opt.value}>
-                        {opt.label}
-                      </option>
-                    ))}
-                  </select>
-                  {errors.service && (
-                    <p
-                      id="service-error"
-                      className="mt-1.5 text-xs text-red-600 flex items-center gap-1"
-                      role="alert"
-                    >
-                      <AlertCircle className="w-3 h-3" aria-hidden="true" />
-                      {errors.service.message}
-                    </p>
-                  )}
-                </div>
-
-                {/* Message */}
-                <div className="sm:col-span-2">
-                  <label
-                    htmlFor="message"
-                    className="block text-sm font-semibold mb-1.5"
-                    style={{ color: "var(--color-text-dark)" }}
-                  >
-                    Message{" "}
-                    <span aria-label="required" style={{ color: "#c0392b" }}>
-                      *
-                    </span>
-                  </label>
-                  <textarea
-                    id="message"
-                    rows={5}
-                    placeholder="Tell us about your pet and how we can help…"
-                    className={`${inputClass(!!errors.message)} resize-none`}
-                    aria-required="true"
-                    aria-describedby={
-                      errors.message ? "message-error" : undefined
-                    }
-                    {...register("message")}
-                  />
-                  {errors.message && (
-                    <p
-                      id="message-error"
-                      className="mt-1.5 text-xs text-red-600 flex items-center gap-1"
-                      role="alert"
-                    >
-                      <AlertCircle className="w-3 h-3" aria-hidden="true" />
-                      {errors.message.message}
-                    </p>
                   )}
                 </div>
               </div>
 
+              {/* Row 2: Pet's Name + Service Needed */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full">
+                {/* Pet's Name */}
+                <div className="flex flex-col gap-1.5">
+                  <label
+                    htmlFor="petName"
+                    className="font-quicksand font-semibold text-[13px] sm:text-[14px] leading-tight text-[#203E7D]"
+                    style={{ color: "#203E7D" }}
+                  >
+                    Pet&apos;s Name
+                  </label>
+                  <input
+                    id="petName"
+                    type="text"
+                    placeholder="Pet's Name"
+                    {...register("petName")}
+                    className={`w-full h-[46px] sm:h-[48px] px-4 rounded-full bg-white font-quicksand text-sm sm:text-[15px] placeholder:text-[#6B7280] text-[#191C19] outline-none transition-colors border ${
+                      errors.petName
+                        ? "border-red-400 focus:border-red-500"
+                        : "border-[rgba(191,201,191,0.5)] focus:border-[#203E7D]"
+                    }`}
+                  />
+                  {errors.petName && (
+                    <span className="text-xs text-red-500 font-medium px-2">
+                      {errors.petName.message}
+                    </span>
+                  )}
+                </div>
+
+                {/* Service Needed Dropdown */}
+                <div className="flex flex-col gap-1.5">
+                  <label
+                    htmlFor="service"
+                    className="font-quicksand font-semibold text-[13px] sm:text-[14px] leading-tight text-[#203E7D]"
+                    style={{ color: "#203E7D" }}
+                  >
+                    Service Needed
+                  </label>
+                  <div className="relative w-full">
+                    <select
+                      id="service"
+                      {...register("service")}
+                      className="w-full h-[46px] sm:h-[48px] px-4 pr-10 rounded-full bg-white font-quicksand text-sm sm:text-[15px] text-[#191C19] outline-none transition-colors border border-[rgba(191,201,191,0.5)] focus:border-[#203E7D] appearance-none cursor-pointer"
+                    >
+                      {serviceOptions.map((opt) => (
+                        <option key={opt.value} value={opt.value}>
+                          {opt.label}
+                        </option>
+                      ))}
+                    </select>
+                    <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[#6B7280] pointer-events-none" />
+                  </div>
+                  {errors.service && (
+                    <span className="text-xs text-red-500 font-medium px-2">
+                      {errors.service.message}
+                    </span>
+                  )}
+                </div>
+              </div>
+
+              {/* Row 3: Message Textarea */}
+              <div className="flex flex-col gap-1.5">
+                <label
+                  htmlFor="message"
+                  className="font-quicksand font-semibold text-[13px] sm:text-[14px] leading-tight text-[#203E7D]"
+                  style={{ color: "#203E7D" }}
+                >
+                  Message
+                </label>
+                <textarea
+                  id="message"
+                  rows={4}
+                  placeholder="How can we help?"
+                  {...register("message")}
+                  className={`w-full h-[110px] p-3.5 rounded-[18px] bg-white font-quicksand text-sm sm:text-[15px] placeholder:text-[#6B7280] text-[#191C19] outline-none transition-colors border resize-none ${
+                    errors.message
+                      ? "border-red-400 focus:border-red-500"
+                      : "border-[rgba(191,201,191,0.5)] focus:border-[#203E7D]"
+                  }`}
+                />
+                {errors.message && (
+                  <span className="text-xs text-red-500 font-medium px-2">
+                    {errors.message.message}
+                  </span>
+                )}
+              </div>
+
+              {/* Honeypot anti-spam field */}
+              <input
+                type="text"
+                {...register("website")}
+                tabIndex={-1}
+                autoComplete="off"
+                className="hidden"
+                aria-hidden="true"
+              />
+
+              {/* Row 4: Submit Button */}
               <button
                 type="submit"
-                disabled={isSubmitting || submitStatus === "loading"}
-                className="btn-primary w-full justify-center mt-6 text-base focus-ring disabled:opacity-60 disabled:cursor-not-allowed"
-                style={{ color: "var(--color-text-dark)" }}
-                aria-label={
-                  isSubmitting || submitStatus === "loading"
-                    ? "Sending your message…"
-                    : "Send Message"
-                }
+                disabled={isSubmitting}
+                className="w-full h-[48px] sm:h-[50px] rounded-full bg-[#F0C051] hover:bg-[#e2b343] active:scale-[0.99] font-quicksand font-semibold text-[15px] text-white flex items-center justify-center transition-all duration-300 shadow-sm hover:shadow-md cursor-pointer disabled:opacity-60 mt-1"
+                style={{
+                  backgroundColor: "#F0C051",
+                  borderRadius: "9999px",
+                }}
               >
-                {isSubmitting || submitStatus === "loading" ? (
-                  <>
-                    <Loader2 className="w-4 h-4 animate-spin" aria-hidden="true" />
-                    Sending…
-                  </>
+                {isSubmitting ? (
+                  <span className="inline-flex items-center gap-2">
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                    Sending...
+                  </span>
                 ) : (
-                  <>
-                    <Send className="w-4 h-4" aria-hidden="true" />
-                    Send Message
-                  </>
+                  "Send Message"
                 )}
               </button>
-
-              <p
-                className="text-xs mt-4 text-center"
-                style={{ color: "var(--color-text-light)" }}
-              >
-                Fields marked{" "}
-                <span style={{ color: "#c0392b" }} aria-hidden="true">
-                  *
-                </span>{" "}
-                are required. We will respond within one business day.
-              </p>
             </form>
-          </div>
+          </ScrollReveal>
         </div>
       </div>
     </section>

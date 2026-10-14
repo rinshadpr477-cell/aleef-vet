@@ -1,11 +1,18 @@
 import type { Metadata } from "next";
-import { Poppins } from "next/font/google";
+import { Poppins, Quicksand } from "next/font/google";
 import "./globals.css";
 
 const poppins = Poppins({
   weight: ["400", "500", "600", "700"],
   subsets: ["latin"],
   variable: "--font-poppins",
+  display: "swap",
+});
+
+const quicksand = Quicksand({
+  weight: ["500", "600", "700"],
+  subsets: ["latin"],
+  variable: "--font-quicksand",
   display: "swap",
 });
 
@@ -49,8 +56,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={poppins.variable}>
+    <html lang="en" className={`${poppins.variable} ${quicksand.variable}`}>
       <body className="font-sans antialiased">
+        <noscript>
+          <style>{`.reveal-init { opacity: 1 !important; transform: none !important; }`}</style>
+        </noscript>
         {children}
       </body>
     </html>
