@@ -1,3 +1,7 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import { motion, useReducedMotion } from "framer-motion";
 import Reveal from "@/components/ui/Reveal";
 
 function ScissorsIcon() {
@@ -146,11 +150,25 @@ const services = [
 ];
 
 export default function Services() {
+  const shouldReduceMotion = useReducedMotion();
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
+  const half = services.length / 2;
+
   return (
     <section
       id="services"
-      className="relative w-full bg-[#F0F5FD] py-14 lg:py-20 scroll-mt-[80px]"
-      style={{ backgroundColor: "#F0F5FD" }}
+      className="relative w-full bg-[#F0F5FD] py-14 lg:py-20 scroll-mt-[80px] overflow-x-clip"
+      style={{ backgroundColor: "#F0F5FD", overflowX: "clip" }}
       aria-labelledby="services-heading"
     >
       <div className="w-full px-4 sm:px-6 lg:px-8 flex flex-col items-center">
@@ -180,57 +198,80 @@ export default function Services() {
         <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 items-stretch">
           {services.map((service, idx) => {
             const Icon = service.icon;
+            const isLeft = idx < half;
+            const initialX = isLeft ? -80 : 80;
+
             return (
-              <Reveal
-                as="article"
+              <motion.article
                 key={service.id}
                 id={service.id}
-                delay={idx * 0.1}
-                duration={0.6}
-                y={24}
-                className="bg-white rounded-[24px] p-6 sm:p-7 flex flex-col items-start gap-4 shadow-sm h-full card-interactive-hover"
-                style={{
-                  backgroundColor: "#FFFFFF",
-                  border: "1px solid rgba(2, 35, 107, 0.12)",
-                  boxShadow: "0px 4px 20px rgba(27, 94, 59, 0.04)",
-                  borderRadius: "24px",
+                initial={
+                  shouldReduceMotion
+                    ? { opacity: 0 }
+                    : isMobile
+                    ? { opacity: 0, y: 30 }
+                    : { opacity: 0, x: initialX }
+                }
+                whileInView={
+                  shouldReduceMotion
+                    ? { opacity: 1 }
+                    : isMobile
+                    ? { opacity: 1, y: 0 }
+                    : { opacity: 1, x: 0 }
+                }
+                viewport={{ once: true, margin: "-80px" }}
+                transition={{
+                  duration: shouldReduceMotion ? 0.2 : 0.7,
+                  delay: idx * 0.12,
+                  ease: "easeOut",
                 }}
-                aria-label={service.title}
+                className="h-full flex"
               >
-                {/* Icon Circle */}
                 <div
-                  className="w-[64px] h-[64px] rounded-full flex items-center justify-center flex-shrink-0"
+                  className="w-full bg-white rounded-[24px] p-6 sm:p-7 flex flex-col items-start gap-4 shadow-sm h-full card-interactive-hover"
                   style={{
-                    backgroundColor: service.iconBg,
-                    width: "64px",
-                    height: "64px",
-                    borderRadius: "9999px",
+                    backgroundColor: "#FFFFFF",
+                    border: "1px solid rgba(2, 35, 107, 0.12)",
+                    boxShadow: "0px 4px 20px rgba(27, 94, 59, 0.04)",
+                    borderRadius: "24px",
                   }}
-                  aria-hidden="true"
+                  aria-label={service.title}
                 >
-                  <Icon />
-                </div>
-
-                {/* Heading 3 */}
-                <div className="pt-1 w-full">
-                  <h3
-                    className="font-quicksand font-semibold text-lg sm:text-[20px] leading-snug text-[#009AE8]"
-                    style={{ color: "#009AE8" }}
+                  {/* Icon Circle */}
+                  <div
+                    className="w-[64px] h-[64px] rounded-full flex items-center justify-center flex-shrink-0"
+                    style={{
+                      backgroundColor: service.iconBg,
+                      width: "64px",
+                      height: "64px",
+                      borderRadius: "9999px",
+                    }}
+                    aria-hidden="true"
                   >
-                    {service.title}
-                  </h3>
-                </div>
+                    <Icon />
+                  </div>
 
-                {/* Description */}
-                <div className="w-full flex-grow">
-                  <p
-                    className="font-quicksand font-normal text-[14px] sm:text-[15px] leading-[23px] text-[#404942]"
-                    style={{ color: "#404942" }}
-                  >
-                    {service.description}
-                  </p>
+                  {/* Heading 3 */}
+                  <div className="pt-1 w-full">
+                    <h3
+                      className="font-quicksand font-semibold text-lg sm:text-[20px] leading-snug text-[#009AE8]"
+                      style={{ color: "#009AE8" }}
+                    >
+                      {service.title}
+                    </h3>
+                  </div>
+
+                  {/* Description */}
+                  <div className="w-full flex-grow">
+                    <p
+                      className="font-quicksand font-normal text-[14px] sm:text-[15px] leading-[23px] text-[#404942]"
+                      style={{ color: "#404942" }}
+                    >
+                      {service.description}
+                    </p>
+                  </div>
                 </div>
-              </Reveal>
+              </motion.article>
             );
           })}
         </div>
