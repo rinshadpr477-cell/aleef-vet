@@ -1,3 +1,5 @@
+import ScrollReveal from "@/components/ui/ScrollReveal";
+
 export default function CTA() {
   return (
     <section
@@ -9,7 +11,10 @@ export default function CTA() {
       aria-labelledby="cta-heading"
     >
       <div className="w-full px-4 sm:px-6 lg:px-8">
-        <div
+        <ScrollReveal
+          delay={0}
+          y={16}
+          duration={550}
           className="flex flex-col items-center max-w-[640px] mx-auto text-center"
         >
           <h2
@@ -34,7 +39,7 @@ export default function CTA() {
           >
             Book an Appointment Now
           </a>
-        </div>
+        </ScrollReveal>
       </div>
     </section>
   );

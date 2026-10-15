@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { PawPrint } from "lucide-react";
+import ScrollReveal from "@/components/ui/ScrollReveal";
 
 const features = [
   "Stress-free handling techniques",
@@ -19,7 +20,9 @@ export default function About() {
       <div className="w-full px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col lg:flex-row items-center justify-between gap-10 lg:gap-16">
           {/* Left Column: Image with Floating Stat Badge */}
-          <div
+          <ScrollReveal
+            delay={0}
+            y={16}
             className="relative w-full lg:max-w-[520px] pb-6 lg:pb-0 flex-shrink-0"
           >
             {/* Image Container */}
@@ -65,10 +68,12 @@ export default function About() {
                 of compassionate care in the community.
               </p>
             </div>
-          </div>
+          </ScrollReveal>
 
           {/* Right Column: Text Content */}
-          <div
+          <ScrollReveal
+            delay={80}
+            y={16}
             className="flex flex-col items-start gap-5 lg:gap-6 w-full lg:max-w-[620px]"
           >
             {/* Heading 2 */}
@@ -127,7 +132,7 @@ export default function About() {
                 Learn More About Us
               </span>
             </Link>
-          </div>
+          </ScrollReveal>
         </div>
       </div>
     </section>

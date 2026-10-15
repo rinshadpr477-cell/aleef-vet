@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { PawPrint, MapPin, Phone, Mail } from "lucide-react";
+import ScrollReveal from "@/components/ui/ScrollReveal";
 
 export default function Footer() {
   return (
@@ -10,7 +11,9 @@ export default function Footer() {
     >
       <div className="w-full px-4 sm:px-6 lg:px-8 flex flex-col gap-10 lg:gap-12">
         {/* Main 4 Columns with exact proportional gap spanning corner to corner */}
-        <div
+        <ScrollReveal
+          delay={0}
+          y={16}
           className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-10 xl:gap-12 items-start"
         >
           {/* Column 1: Brand & Tagline */}
@@ -157,10 +160,12 @@ export default function Footer() {
               </div>
             </div>
           </div>
-        </div>
+        </ScrollReveal>
 
         {/* Bottom Horizontal Border & Links Bar */}
-        <div
+        <ScrollReveal
+          delay={80}
+          y={12}
           className="pt-6 flex flex-col sm:flex-row justify-between items-center gap-4 w-full"
           style={{
             borderTop: "1px solid rgba(191, 201, 191, 0.3)",
@@ -201,7 +206,7 @@ export default function Footer() {
               Emergency Care
             </Link>
           </nav>
-        </div>
+        </ScrollReveal>
       </div>
     </footer>
   );

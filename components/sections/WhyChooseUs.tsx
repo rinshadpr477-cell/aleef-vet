@@ -1,4 +1,5 @@
 import CardReveal from "@/components/ui/CardReveal";
+import ScrollReveal from "@/components/ui/ScrollReveal";
 
 function AwardIcon() {
   return (
@@ -185,7 +186,9 @@ export default function WhyChooseUs() {
           }}
         >
         {/* Section Heading */}
-        <div
+        <ScrollReveal
+          delay={0}
+          y={16}
           className="w-full text-center mb-8 lg:mb-12"
         >
           <h2
@@ -195,7 +198,7 @@ export default function WhyChooseUs() {
           >
             Why Choose Aleef Veterinary?
           </h2>
-        </div>
+        </ScrollReveal>
 
         {/* 2x2 Feature Cards Grid */}
         <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-5 lg:gap-6">

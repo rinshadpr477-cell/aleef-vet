@@ -1,4 +1,5 @@
 import CardReveal from "@/components/ui/CardReveal";
+import ScrollReveal from "@/components/ui/ScrollReveal";
 
 function ScissorsIcon() {
   return (
@@ -155,7 +156,9 @@ export default function Services() {
     >
       <div className="w-full px-4 sm:px-6 lg:px-8 flex flex-col items-center">
         {/* Section Header */}
-        <div
+        <ScrollReveal
+          delay={0}
+          y={16}
           className="w-full text-center mb-10 lg:mb-14 flex flex-col items-center gap-3"
         >
           <h2
@@ -171,7 +174,7 @@ export default function Services() {
           >
             We offer a full spectrum of veterinary services designed to address every aspect of your pet&apos;s health.
           </p>
-        </div>
+        </ScrollReveal>
 
         {/* 4 Cards Grid */}
         <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 items-stretch">

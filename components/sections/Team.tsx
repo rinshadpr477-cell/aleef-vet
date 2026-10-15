@@ -1,5 +1,6 @@
 import Image from "next/image";
 import CardReveal from "@/components/ui/CardReveal";
+import ScrollReveal from "@/components/ui/ScrollReveal";
 
 const teamMembers = [
   {
@@ -47,7 +48,9 @@ export default function Team() {
     >
       <div className="w-full px-4 sm:px-6 lg:px-8 flex flex-col items-center">
         {/* Heading */}
-        <div
+        <ScrollReveal
+          delay={0}
+          y={16}
           className="w-full text-center mb-10 lg:mb-14"
         >
           <h2
@@ -57,7 +60,7 @@ export default function Team() {
           >
             Meet Our Veterinary Team
           </h2>
-        </div>
+        </ScrollReveal>
 
         {/* Team Cards Container */}
         <div className="w-full grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 justify-center items-stretch">

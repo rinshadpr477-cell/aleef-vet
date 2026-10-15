@@ -7,11 +7,15 @@ export interface ScrollRevealProps<T extends ElementType = "div"> {
   children: React.ReactNode;
   className?: string;
   delay?: number; // ms, e.g. 0, 80, 160
-  duration?: number; // ms, default 550ms
-  y?: number; // vertical movement in px, default 16px
-  threshold?: number; // viewport intersection ratio, default 0.15
+  duration?: number; // ms, default 550ms (in 400-650ms range)
+  y?: number; // vertical movement in px, default 16px (in 12-20px range)
+  threshold?: number; // viewport intersection ratio, default 0.15 (in 10-20% range)
   immediate?: boolean; // triggers immediately on mount (for Hero)
+  interactiveHover?: boolean; // smooth 3-5px lift with 200-250ms transition for cards
   style?: React.CSSProperties;
+  id?: string;
+  "aria-label"?: string;
+  [key: string]: unknown;
 }
 
 export default function ScrollReveal<T extends ElementType = "div">({
@@ -23,6 +27,7 @@ export default function ScrollReveal<T extends ElementType = "div">({
   y = 16,
   threshold = 0.15,
   immediate = false,
+  interactiveHover = false,
   style,
   ...restProps
 }: ScrollRevealProps<T> &
@@ -33,7 +38,7 @@ export default function ScrollReveal<T extends ElementType = "div">({
   const [isComplete, setIsComplete] = useState(false);
 
   useEffect(() => {
-    // Check prefers-reduced-motion
+    // 1. Respect prefers-reduced-motion
     const prefersReducedMotion =
       typeof window !== "undefined" &&
       window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -58,7 +63,7 @@ export default function ScrollReveal<T extends ElementType = "div">({
       return () => clearTimeout(timer);
     }
 
-    // Scroll-triggered reveal via IntersectionObserver
+    // 2. Fallback if IntersectionObserver is unsupported in the runtime
     if (typeof IntersectionObserver === "undefined") {
       rafId = requestAnimationFrame(() => {
         setIsRevealed(true);
@@ -72,33 +77,42 @@ export default function ScrollReveal<T extends ElementType = "div">({
     const currentRef = ref.current;
     if (!currentRef) return;
 
+    // 3. Fallback safety timer: ensure content is never permanently hidden
+    const safetyTimer = setTimeout(() => {
+      setIsRevealed(true);
+      setIsComplete(true);
+    }, 2500);
+
+    // 4. Single-trigger IntersectionObserver at 10-20% (0.15) threshold
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
+          clearTimeout(safetyTimer);
           setIsRevealed(true);
           observer.unobserve(entry.target);
         }
       },
       {
         threshold,
-        rootMargin: "0px 0px -40px 0px",
+        rootMargin: "0px 0px -30px 0px",
       }
     );
 
     observer.observe(currentRef);
 
     return () => {
+      clearTimeout(safetyTimer);
       observer.disconnect();
     };
   }, [delay, immediate, threshold]);
 
   // Clean up inline transform and transition after animation completes
-  // to ensure hover states (e.g. hover:-translate-y-1) work with zero conflicts
+  // to ensure hover states (e.g. card hover -translate-y-1) work with zero conflicts
   useEffect(() => {
     if (isRevealed && !isComplete) {
       const timer = setTimeout(() => {
         setIsComplete(true);
-      }, duration + delay + 50);
+      }, duration + delay + 40);
       return () => clearTimeout(timer);
     }
   }, [isRevealed, isComplete, duration, delay]);
@@ -116,10 +130,12 @@ export default function ScrollReveal<T extends ElementType = "div">({
         willChange: isRevealed ? "opacity, transform" : "auto",
       };
 
+  const hoverClass = interactiveHover ? "card-interactive-hover" : "";
+
   return (
     <Component
       ref={ref}
-      className={`reveal-init ${className}`}
+      className={`reveal-init ${hoverClass} ${className}`.trim()}
       style={animationStyle}
       {...restProps}
     >
