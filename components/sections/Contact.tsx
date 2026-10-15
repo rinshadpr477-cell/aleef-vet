@@ -5,7 +5,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { Headset, CheckCircle, AlertCircle, Loader2, ChevronDown } from "lucide-react";
 import { contactSchema, type ContactFormData } from "@/lib/validation";
-import ScrollReveal from "@/components/ui/ScrollReveal";
 
 const serviceOptions = [
   { value: "grooming", label: "Grooming" },
@@ -75,9 +74,7 @@ export default function Contact() {
       <div className="w-full px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col lg:flex-row items-center justify-between gap-10 lg:gap-16">
           {/* Left Column: Heading, Subtitle & Expert Support Card */}
-          <ScrollReveal
-            delay={0}
-            y={16}
+          <div
             className="flex flex-col items-start gap-5 lg:gap-6 w-full lg:max-w-[560px]"
           >
             {/* Heading */}
@@ -124,12 +121,10 @@ export default function Contact() {
                 questions about our services and pet care.
               </p>
             </div>
-          </ScrollReveal>
+          </div>
 
           {/* Right Column: Contact Form Card */}
-          <ScrollReveal
-            delay={80}
-            y={16}
+          <div
             className="w-full lg:max-w-[580px] bg-white rounded-[24px] p-6 sm:p-8 lg:p-9 relative flex-shrink-0"
             style={{
               backgroundColor: "#FFFFFF",
@@ -339,7 +334,7 @@ export default function Contact() {
                 )}
               </button>
             </form>
-          </ScrollReveal>
+          </div>
         </div>
       </div>
     </section>

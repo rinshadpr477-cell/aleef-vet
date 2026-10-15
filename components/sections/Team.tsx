@@ -1,5 +1,5 @@
 import Image from "next/image";
-import ScrollReveal from "@/components/ui/ScrollReveal";
+import CardReveal from "@/components/ui/CardReveal";
 
 const teamMembers = [
   {
@@ -47,9 +47,7 @@ export default function Team() {
     >
       <div className="w-full px-4 sm:px-6 lg:px-8 flex flex-col items-center">
         {/* Heading */}
-        <ScrollReveal
-          delay={0}
-          y={16}
+        <div
           className="w-full text-center mb-10 lg:mb-14"
         >
           <h2
@@ -59,18 +57,21 @@ export default function Team() {
           >
             Meet Our Veterinary Team
           </h2>
-        </ScrollReveal>
+        </div>
 
         {/* Team Cards Container */}
         <div className="w-full grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 justify-center items-stretch">
           {teamMembers.map((member, idx) => (
-            <ScrollReveal
+            <CardReveal
               as="article"
               key={member.id}
               id={member.id}
               delay={idx * 80}
+              duration={520}
               y={16}
-              className="bg-[#F4FAFF] rounded-[24px] overflow-hidden flex flex-col transition-all duration-300 hover:shadow-lg hover:-translate-y-1 h-full"
+              threshold={0.15}
+              interactiveHover={true}
+              className="bg-[#F4FAFF] rounded-[24px] overflow-hidden flex flex-col hover:shadow-md h-full"
               style={{
                 backgroundColor: "#F4FAFF",
                 borderRadius: "24px",
@@ -131,7 +132,7 @@ export default function Team() {
                   </p>
                 </div>
               </div>
-            </ScrollReveal>
+            </CardReveal>
           ))}
         </div>
       </div>

@@ -155,15 +155,12 @@ export default function Header() {
 
         {/* ── Right on Desktop: CTA Button / Right on Mobile: Hamburger ── */}
         <div className="flex items-center">
-          {/* Desktop CTA Button: Cornered Right */}
+          {/* Desktop CTA Button: Cornered Right (hidden on mobile) */}
           <a
             href="#contact"
             onClick={() => setActiveNav("#contact")}
-            className="hidden md:inline-flex"
+            className="hidden md:inline-flex items-center justify-center"
             style={{
-              display: "inline-flex",
-              alignItems: "center",
-              justifyContent: "center",
               backgroundColor: "#203E7D",
               color: "#FFFFFF",
               fontFamily: "var(--font-quicksand), 'Quicksand', sans-serif",
@@ -191,21 +188,18 @@ export default function Header() {
 
           {/* Mobile Hamburger on Right */}
           <button
-            className="md:hidden"
+            className="md:hidden flex items-center justify-center p-2 rounded-lg text-[#012679] hover:bg-black/5 transition-colors"
             onClick={() => setMenuOpen(!menuOpen)}
             aria-expanded={menuOpen}
             aria-controls="mobile-menu"
             aria-label={menuOpen ? "Close navigation menu" : "Open navigation menu"}
             style={{
-              padding: "6px",
-              borderRadius: "6px",
               background: "none",
               border: "none",
-              color: "#012679",
               cursor: "pointer",
             }}
           >
-            {menuOpen ? <X style={{ width: 24, height: 24 }} /> : <Menu style={{ width: 24, height: 24 }} />}
+            {menuOpen ? <X style={{ width: 26, height: 26 }} /> : <Menu style={{ width: 26, height: 26 }} />}
           </button>
         </div>
       </div>
@@ -231,7 +225,7 @@ export default function Header() {
       >
         <nav
           aria-label="Mobile navigation"
-          className="container-main py-4 flex flex-col gap-1"
+          className="w-full px-5 sm:px-6 py-4 flex flex-col gap-1"
         >
           {navLinks.map((link) => {
             const isActive = activeNav === link.href;

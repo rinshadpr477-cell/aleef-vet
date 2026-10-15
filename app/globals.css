@@ -239,17 +239,30 @@
 .animate-delay-3 { animation-delay: 0.3s; }
 .animate-delay-4 { animation-delay: 0.4s; }
 
+/* Card interactive hover effect: subtle 3-5px lift, 200-250ms smooth transition */
+.card-interactive-hover {
+  transition: transform 220ms ease-out, box-shadow 220ms ease-out !important;
+}
+
+.card-interactive-hover:hover {
+  transform: translateY(-4px) !important;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .animate-fade-in-up,
   .animate-fade-in,
-  .reveal-init {
+  .reveal-init,
+  .card-reveal-init {
     animation: none !important;
     transition: none !important;
     opacity: 1 !important;
     transform: none !important;
   }
-  .card-hover:hover {
-    transform: none;
+  .card-hover:hover,
+  .card-interactive-hover,
+  .card-interactive-hover:hover {
+    transform: none !important;
+    transition: none !important;
   }
   .btn-primary:hover,
   .btn-secondary:hover,
@@ -257,4 +270,5 @@
     transform: none;
   }
 }
+
 

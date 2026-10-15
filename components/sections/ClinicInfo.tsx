@@ -1,6 +1,5 @@
 import Image from "next/image";
 import { MapPin, Phone, Clock } from "lucide-react";
-import ScrollReveal from "@/components/ui/ScrollReveal";
 
 export default function ClinicInfo() {
   return (
@@ -12,9 +11,7 @@ export default function ClinicInfo() {
     >
       <div className="w-full px-4 sm:px-6 lg:px-8 flex flex-col items-center">
         {/* Header Container */}
-        <ScrollReveal
-          delay={0}
-          y={16}
+        <div
           className="w-full text-center mb-10 lg:mb-14 flex flex-col items-center gap-3"
         >
           <h2
@@ -30,14 +27,12 @@ export default function ClinicInfo() {
           >
             Visit our modern clinic in the heart of Abu Dhabi.
           </p>
-        </ScrollReveal>
+        </div>
 
         {/* Content Columns: Left Map + Right Contact Info */}
         <div className="w-full flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-14">
           {/* Left Column: Map */}
-          <ScrollReveal
-            delay={0}
-            y={16}
+          <div
             className="relative w-full lg:max-w-[540px] h-[300px] sm:h-[380px] lg:h-[440px] rounded-[24px] overflow-hidden group shadow-sm flex-shrink-0"
             style={{
               borderRadius: "24px",
@@ -60,12 +55,10 @@ export default function ClinicInfo() {
                 priority
               />
             </a>
-          </ScrollReveal>
+          </div>
 
           {/* Right Column: Contact Info */}
-          <ScrollReveal
-            delay={80}
-            y={16}
+          <div
             className="flex flex-col items-start gap-7 w-full lg:max-w-[580px]"
           >
             {/* Info Items List */}
@@ -217,7 +210,7 @@ export default function ClinicInfo() {
                 />
               </svg>
             </a>
-          </ScrollReveal>
+          </div>
         </div>
       </div>
     </section>

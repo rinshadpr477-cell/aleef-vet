@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 import { Star, ShieldCheck, Heart, ArrowRight } from "lucide-react";
-import ScrollReveal from "@/components/ui/ScrollReveal";
 
 export default function Hero() {
   return (
@@ -49,11 +48,7 @@ export default function Hero() {
             }}
           >
             {/* Header Text Group */}
-            <ScrollReveal
-              immediate
-              delay={0}
-              y={16}
-              duration={550}
+            <div
               style={{
                 display: "flex",
                 flexDirection: "column",
@@ -112,14 +107,10 @@ export default function Hero() {
                 From kitten visits to senior care, we provide compassionate, modern
                 veterinary services to keep your furry family members healthy and happy.
               </p>
-            </ScrollReveal>
+            </div>
 
             {/* CTA Buttons */}
-            <ScrollReveal
-              immediate
-              delay={100}
-              y={16}
-              duration={550}
+            <div
               style={{
                 paddingTop: "12px",
                 display: "flex",
@@ -199,15 +190,11 @@ export default function Hero() {
               >
                 Explore Services
               </a>
-            </ScrollReveal>
+            </div>
           </div>
 
           {/* ── Right Column (Image with Mint Glow Blur & Border) ── */}
-          <ScrollReveal
-            immediate
-            delay={160}
-            y={16}
-            duration={550}
+          <div
             className="w-full lg:max-w-[500px] flex justify-center lg:justify-end relative"
             style={{
               flex: "1 1 0%",
@@ -261,7 +248,7 @@ export default function Hero() {
                 }}
               />
             </div>
-          </ScrollReveal>
+          </div>
         </div>
       </section>
 
@@ -275,11 +262,7 @@ export default function Hero() {
         aria-label="Trust highlights"
       >
         <div className="w-full px-4 sm:px-6 lg:px-8 py-3.5 sm:py-4">
-          <ScrollReveal
-            immediate
-            delay={240}
-            y={10}
-            duration={500}
+          <div
             style={{
               display: "flex",
               flexDirection: "row",
@@ -390,7 +373,7 @@ export default function Hero() {
                 Fear-Free Certified
               </span>
             </div>
-          </ScrollReveal>
+          </div>
         </div>
       </div>
     </>
