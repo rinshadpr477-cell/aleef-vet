@@ -8,15 +8,14 @@ import {
   motionEasing,
   motionStagger,
   motionOffsets,
-  defaultViewport,
 } from "@/lib/motion";
 
 const subscribeResize = (callback: () => void) => {
   window.addEventListener("resize", callback);
   return () => window.removeEventListener("resize", callback);
 };
-const getMobileSnapshot = () => window.innerWidth < 768;
-const getMobileServerSnapshot = () => false;
+const getIsDesktopSnapshot = () => window.innerWidth >= 1024;
+const getIsDesktopServerSnapshot = () => false;
 
 function ScissorsIcon() {
   return (
@@ -165,10 +164,10 @@ const services = [
 
 export default function Services() {
   const shouldReduceMotion = useReducedMotion();
-  const isMobile = useSyncExternalStore(
+  const isDesktop = useSyncExternalStore(
     subscribeResize,
-    getMobileSnapshot,
-    getMobileServerSnapshot
+    getIsDesktopSnapshot,
+    getIsDesktopServerSnapshot
   );
 
   const half = services.length / 2;
@@ -180,7 +179,7 @@ export default function Services() {
       style={{ backgroundColor: "#F0F5FD", overflowX: "clip" }}
       aria-labelledby="services-heading"
     >
-      <div className="w-full px-4 sm:px-6 lg:px-8 flex flex-col items-center">
+      <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center">
         {/* Section Header */}
         <Reveal
           delay={0}
@@ -208,33 +207,31 @@ export default function Services() {
           {services.map((service, idx) => {
             const Icon = service.icon;
             const isLeft = idx < half;
-            const initialX = isLeft ? -motionOffsets.x : motionOffsets.x;
+            // On mobile & tablet: always zero horizontal offset to prevent edge overflow/clipping
+            const initialX = isDesktop ? (isLeft ? -motionOffsets.x : motionOffsets.x) : 0;
+            const initialY = isDesktop ? 0 : motionOffsets.yMobile;
 
             return (
               <motion.article
-                key={service.id}
+                key={`${service.id}-${isDesktop ? "desktop" : "mobile"}`}
                 id={service.id}
                 initial={
                   shouldReduceMotion
                     ? { opacity: 0 }
-                    : isMobile
-                    ? { opacity: 0, y: motionOffsets.yMobile }
-                    : { opacity: 0, x: initialX }
+                    : { opacity: 0, x: initialX, y: initialY }
                 }
                 whileInView={
                   shouldReduceMotion
                     ? { opacity: 1 }
-                    : isMobile
-                    ? { opacity: 1, y: 0 }
-                    : { opacity: 1, x: 0 }
+                    : { opacity: 1, x: 0, y: 0 }
                 }
-                viewport={defaultViewport}
+                viewport={{ once: true, amount: isDesktop ? 0.25 : 0.1 }}
                 transition={{
                   duration: shouldReduceMotion ? 0.2 : motionDurations.base,
                   delay: idx * motionStagger.cards,
                   ease: motionEasing.entrance,
                 }}
-                className="h-full flex"
+                className="h-full flex w-full"
               >
                 <div
                   className="w-full bg-white rounded-[24px] p-6 sm:p-7 flex flex-col items-start gap-4 shadow-sm h-full card-interactive-hover"

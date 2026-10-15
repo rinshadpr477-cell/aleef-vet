@@ -29,8 +29,8 @@ const subscribeResize = (callback: () => void) => {
   return () => window.removeEventListener("resize", callback);
 };
 
-const getMobileSnapshot = () => window.innerWidth < 768;
-const getMobileServerSnapshot = () => false;
+const getIsDesktopSnapshot = () => window.innerWidth >= 1024;
+const getIsDesktopServerSnapshot = () => false;
 
 export default function Contact() {
   const [submitStatus, setSubmitStatus] = useState<SubmitStatus>("idle");
@@ -39,11 +39,12 @@ export default function Contact() {
   const sectionRef = useRef<HTMLElement>(null);
   const isSectionInView = useInView(sectionRef, { amount: 0.25 });
   const shouldReduceMotion = useReducedMotion();
-  const isMobile = useSyncExternalStore(
+  const isDesktop = useSyncExternalStore(
     subscribeResize,
-    getMobileSnapshot,
-    getMobileServerSnapshot
+    getIsDesktopSnapshot,
+    getIsDesktopServerSnapshot
   );
+  const isMobile = !isDesktop;
 
   const {
     register,
@@ -123,7 +124,7 @@ export default function Contact() {
               initial={
                 shouldReduceMotion
                   ? false
-                  : { opacity: 0, x: isMobile ? 0 : -motionOffsets.x, y: isMobile ? motionOffsets.yMobile : 0 }
+                  : { opacity: 0, x: isDesktop ? -motionOffsets.x : 0, y: isDesktop ? 0 : motionOffsets.yMobile }
               }
               whileInView={{ opacity: 1, x: 0, y: 0 }}
               viewport={defaultViewport}
@@ -143,7 +144,7 @@ export default function Contact() {
               initial={
                 shouldReduceMotion
                   ? false
-                  : { opacity: 0, x: isMobile ? 0 : -motionOffsets.x, y: isMobile ? motionOffsets.yMobile : 0 }
+                  : { opacity: 0, x: isDesktop ? -motionOffsets.x : 0, y: isDesktop ? 0 : motionOffsets.yMobile }
               }
               whileInView={{ opacity: 1, x: 0, y: 0 }}
               viewport={defaultViewport}
@@ -164,7 +165,7 @@ export default function Contact() {
               initial={
                 shouldReduceMotion
                   ? false
-                  : { opacity: 0, x: isMobile ? 0 : -motionOffsets.x, y: isMobile ? motionOffsets.yMobile : 0 }
+                  : { opacity: 0, x: isDesktop ? -motionOffsets.x : 0, y: isDesktop ? 0 : motionOffsets.yMobile }
               }
               whileInView={{ opacity: 1, x: 0, y: 0 }}
               viewport={defaultViewport}

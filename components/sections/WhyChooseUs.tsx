@@ -14,8 +14,8 @@ const subscribeResize = (callback: () => void) => {
   window.addEventListener("resize", callback);
   return () => window.removeEventListener("resize", callback);
 };
-const getMobileSnapshot = () => window.innerWidth < 768;
-const getMobileServerSnapshot = () => false;
+const getIsDesktopSnapshot = () => window.innerWidth >= 768;
+const getIsDesktopServerSnapshot = () => false;
 
 function AwardIcon() {
   return (
@@ -338,10 +338,10 @@ function FeatureCard({
 
 export default function WhyChooseUs() {
   const shouldReduceMotion = useReducedMotion();
-  const isMobile = useSyncExternalStore(
+  const isDesktop = useSyncExternalStore(
     subscribeResize,
-    getMobileSnapshot,
-    getMobileServerSnapshot
+    getIsDesktopSnapshot,
+    getIsDesktopServerSnapshot
   );
 
   return (
@@ -424,17 +424,17 @@ export default function WhyChooseUs() {
             {features.map((feature, idx) => {
               const Icon = feature.icon;
 
-              // Corner converge offsets based on grid index
-              const initialX = isMobile ? 0 : idx % 2 === 0 ? -motionOffsets.x : motionOffsets.x;
-              const initialY = isMobile ? motionOffsets.yMobile : idx < 2 ? -50 : 50;
+              // Corner converge offsets based on grid index (strictly 0 horizontal on mobile)
+              const initialX = isDesktop ? (idx % 2 === 0 ? -motionOffsets.x : motionOffsets.x) : 0;
+              const initialY = isDesktop ? (idx < 2 ? -50 : 50) : motionOffsets.yMobile;
               const cardDelay = idx * motionStagger.cards;
-              const iconDelay = cardDelay + (isMobile ? 0.25 : 0.35);
+              const iconDelay = cardDelay + (isDesktop ? 0.35 : 0.25);
               const titleDelay = iconDelay + 0.12;
               const descDelay = titleDelay + 0.08;
 
               return (
                 <FeatureCard
-                  key={feature.id}
+                  key={`${feature.id}-${isDesktop ? "desktop" : "mobile"}`}
                   feature={feature}
                   Icon={Icon}
                   initialX={initialX}
