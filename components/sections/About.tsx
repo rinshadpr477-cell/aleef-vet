@@ -1,10 +1,24 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useSyncExternalStore } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { PawPrint } from "lucide-react";
 import { motion, useReducedMotion } from "framer-motion";
+import {
+  motionDurations,
+  motionEasing,
+  motionStagger,
+  motionOffsets,
+  buttonTapTransition,
+} from "@/lib/motion";
+
+const subscribeResize = (callback: () => void) => {
+  window.addEventListener("resize", callback);
+  return () => window.removeEventListener("resize", callback);
+};
+const getMobileSnapshot = () => window.innerWidth < 768;
+const getMobileServerSnapshot = () => false;
 
 const features = [
   "Stress-free handling techniques",
@@ -14,16 +28,11 @@ const features = [
 
 export default function About() {
   const shouldReduceMotion = useReducedMotion();
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-    checkMobile();
-    window.addEventListener("resize", checkMobile);
-    return () => window.removeEventListener("resize", checkMobile);
-  }, []);
+  const isMobile = useSyncExternalStore(
+    subscribeResize,
+    getMobileSnapshot,
+    getMobileServerSnapshot
+  );
 
   // Setting once: true makes it play only the first time; once: false allows fading out and in on each scroll.
   const viewportConfig = { once: false, amount: 0.3 } as const;
@@ -32,16 +41,16 @@ export default function About() {
     initial: shouldReduceMotion
       ? { opacity: 0 }
       : isMobile
-      ? { opacity: 0, y: 24, x: 0 }
-      : { opacity: 0, x: 40, y: 0 },
+      ? { opacity: 0, y: motionOffsets.yMobile, x: 0 }
+      : { opacity: 0, x: motionOffsets.x, y: 0 },
     whileInView: shouldReduceMotion
       ? { opacity: 1 }
       : { opacity: 1, x: 0, y: 0 },
     viewport: viewportConfig,
     transition: {
-      duration: shouldReduceMotion ? 0.2 : 0.6,
-      delay: shouldReduceMotion ? 0 : 0.3 + stepIndex * 0.12,
-      ease: "easeOut" as const,
+      duration: shouldReduceMotion ? 0.2 : motionDurations.base,
+      delay: shouldReduceMotion ? 0 : 0.3 + stepIndex * motionStagger.cards,
+      ease: motionEasing.entrance,
     },
     style: { willChange: "transform, opacity" },
   });
@@ -80,7 +89,7 @@ export default function About() {
               viewport={viewportConfig}
               transition={{
                 duration: shouldReduceMotion ? 0.2 : 1,
-                ease: "easeOut",
+                ease: motionEasing.entrance,
               }}
               className="relative w-full h-[320px] sm:h-[400px] lg:h-[480px] rounded-[24px] overflow-hidden"
               style={{
@@ -116,7 +125,7 @@ export default function About() {
               transition={{
                 duration: shouldReduceMotion ? 0.2 : 0.5,
                 delay: shouldReduceMotion ? 0 : 0.6,
-                ease: "easeOut",
+                ease: motionEasing.entrance,
               }}
               className="absolute -bottom-5 -right-2 sm:-bottom-6 sm:-right-4 bg-[#F5C842] rounded-[20px] p-5 sm:p-6 w-[220px] sm:w-[260px] flex flex-col items-start gap-1 z-10"
               style={{
@@ -191,21 +200,27 @@ export default function About() {
 
             {/* Learn More Button */}
             <motion.div {...textMotionProps(5)}>
-              <Link
-                href="#services"
-                className="inline-flex items-center justify-center px-7 py-3 bg-[#203E7D] hover:bg-[#183063] rounded-full transition-all duration-300 shadow-sm hover:shadow-md hover:-translate-y-0.5 mt-2"
-                style={{
-                  backgroundColor: "#203E7D",
-                  borderRadius: "9999px",
-                }}
+              <motion.div
+                whileHover={shouldReduceMotion ? undefined : { y: -2 }}
+                whileTap={shouldReduceMotion ? undefined : { scale: 0.97 }}
+                transition={buttonTapTransition}
               >
-                <span
-                  className="font-quicksand font-semibold text-sm sm:text-[15px] leading-normal text-[#F5C842] text-center"
-                  style={{ color: "#F5C842" }}
+                <Link
+                  href="#services"
+                  className="inline-flex items-center justify-center px-7 py-3 bg-[#203E7D] hover:bg-[#183063] rounded-full transition-colors duration-250 shadow-sm hover:shadow-md mt-2"
+                  style={{
+                    backgroundColor: "#203E7D",
+                    borderRadius: "9999px",
+                  }}
                 >
-                  Learn More About Us
-                </span>
-              </Link>
+                  <span
+                    className="font-quicksand font-semibold text-sm sm:text-[15px] leading-normal text-[#F5C842] text-center"
+                    style={{ color: "#F5C842" }}
+                  >
+                    Learn More About Us
+                  </span>
+                </Link>
+              </motion.div>
             </motion.div>
           </div>
         </div>

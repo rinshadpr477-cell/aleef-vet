@@ -1,13 +1,52 @@
 "use client";
 
+import { useSyncExternalStore } from "react";
 import Image from "next/image";
 import { Star, ShieldCheck, Heart, ArrowRight } from "lucide-react";
 import { motion, useReducedMotion } from "framer-motion";
+import {
+  motionDurations,
+  motionEasing,
+  motionStagger,
+  motionOffsets,
+  buttonTapTransition,
+} from "@/lib/motion";
+
+const subscribeResize = (callback: () => void) => {
+  window.addEventListener("resize", callback);
+  return () => window.removeEventListener("resize", callback);
+};
+const getMobileSnapshot = () => window.innerWidth < 768;
+const getMobileServerSnapshot = () => false;
 
 export default function Hero() {
   const shouldReduceMotion = useReducedMotion();
+  const isMobile = useSyncExternalStore(
+    subscribeResize,
+    getMobileSnapshot,
+    getMobileServerSnapshot
+  );
 
-  const easeCurve = [0.25, 0.1, 0.25, 1] as const;
+  // Setting once: true makes it play only the first time; once: false allows fading out and in on each scroll.
+  const viewportConfig = { once: false, amount: 0.3 } as const;
+
+  const textMotionProps = (stepIndex: number) => ({
+    initial: shouldReduceMotion
+      ? { opacity: 0 }
+      : isMobile
+      ? { opacity: 0, y: motionOffsets.yMobile, x: 0 }
+      : { opacity: 0, x: -motionOffsets.x, y: 0 },
+    whileInView: shouldReduceMotion
+      ? { opacity: 1 }
+      : { opacity: 1, x: 0, y: 0 },
+    viewport: viewportConfig,
+    transition: {
+      duration: shouldReduceMotion ? 0.2 : motionDurations.base,
+      delay: shouldReduceMotion ? 0 : 0.3 + stepIndex * motionStagger.cards,
+      ease: motionEasing.entrance,
+    },
+    style: { willChange: "transform, opacity" },
+  });
 
   return (
     <>
@@ -15,12 +54,13 @@ export default function Hero() {
       <section
         id="home"
         aria-label="Hero section"
-        className="relative overflow-hidden font-quicksand text-white"
+        className="relative overflow-hidden font-quicksand text-white overflow-x-clip"
         style={{
           backgroundColor: "#203E7D",
           paddingTop: "clamp(96px, 10vw, 124px)",
           paddingBottom: "clamp(48px, 6vw, 72px)",
           isolation: "isolate",
+          overflowX: "clip",
         }}
       >
         {/* Subtle decorative background vector from Figma */}
@@ -52,60 +92,61 @@ export default function Hero() {
               gap: "20px",
             }}
           >
-            {/* 1. Heading & Eyebrow (delay: 0s) */}
-            <motion.div
-              initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 24 }}
-              animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0, ease: easeCurve }}
+            {/* 1. PROACTIVE PET WELLNESS Eyebrow (delay: 0.30s) */}
+            <motion.p
+              {...textMotionProps(0)}
               style={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "flex-start",
-                gap: "20px",
-                width: "100%",
+                fontFamily: "var(--font-quicksand), 'Quicksand', sans-serif",
+                fontWeight: 600,
+                fontSize: "14px",
+                lineHeight: "20px",
+                letterSpacing: "0.08em",
+                textTransform: "uppercase",
+                color: "#F0C051",
+                margin: 0,
+                willChange: "transform, opacity",
               }}
             >
-              {/* PROACTIVE PET WELLNESS Eyebrow */}
-              <p
-                style={{
-                  fontFamily: "var(--font-quicksand), 'Quicksand', sans-serif",
-                  fontWeight: 600,
-                  fontSize: "14px",
-                  lineHeight: "20px",
-                  letterSpacing: "0.08em",
-                  textTransform: "uppercase",
-                  color: "#F0C051",
-                  margin: 0,
-                }}
-              >
-                PROACTIVE PET WELLNESS
-              </p>
+              PROACTIVE PET WELLNESS
+            </motion.p>
 
-              {/* Caring for Your Pets, Every Step of the Way. */}
-              <h1
-                style={{
-                  fontFamily: "var(--font-quicksand), 'Quicksand', sans-serif",
-                  fontWeight: 700,
-                  fontSize: "clamp(32px, 3.8vw, 48px)",
-                  lineHeight: "clamp(40px, 4.6vw, 58px)",
-                  letterSpacing: "-0.02em",
-                  color: "#FFFFFF",
-                  margin: 0,
-                }}
-              >
-                Caring for Your Pets,
-                <br />
-                <span className="sm:whitespace-nowrap">
-                  <span style={{ color: "#F0C051" }}>Every Step</span> of the Way.
-                </span>
-              </h1>
-            </motion.div>
+            {/* 2. Heading (delay: 0.42s, with 'Every Step' fading in 0.2s after) */}
+            <motion.h1
+              {...textMotionProps(1)}
+              style={{
+                fontFamily: "var(--font-quicksand), 'Quicksand', sans-serif",
+                fontWeight: 700,
+                fontSize: "clamp(32px, 3.8vw, 48px)",
+                lineHeight: "clamp(40px, 4.6vw, 58px)",
+                letterSpacing: "-0.02em",
+                color: "#FFFFFF",
+                margin: 0,
+                willChange: "transform, opacity",
+              }}
+            >
+              Caring for Your Pets,
+              <br />
+              <span className="sm:whitespace-nowrap">
+                <motion.span
+                  initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0 }}
+                  whileInView={{ opacity: 1 }}
+                  viewport={viewportConfig}
+                  transition={{
+                    duration: shouldReduceMotion ? 0.2 : 0.5,
+                    delay: shouldReduceMotion ? 0 : 0.62,
+                    ease: motionEasing.entrance,
+                  }}
+                  style={{ color: "#F0C051" }}
+                >
+                  Every Step
+                </motion.span>{" "}
+                of the Way.
+              </span>
+            </motion.h1>
 
-            {/* 2. Paragraph (delay: 0.15s) */}
+            {/* 3. Paragraph (delay: 0.54s) */}
             <motion.p
-              initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 24 }}
-              animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.15, ease: easeCurve }}
+              {...textMotionProps(2)}
               style={{
                 fontFamily: "var(--font-quicksand), 'Quicksand', sans-serif",
                 fontWeight: 500,
@@ -114,17 +155,16 @@ export default function Hero() {
                 color: "rgba(255, 255, 255, 0.9)",
                 margin: 0,
                 maxWidth: "480px",
+                willChange: "transform, opacity",
               }}
             >
               From kitten visits to senior care, we provide compassionate, modern
               veterinary services to keep your furry family members healthy and happy.
             </motion.p>
 
-            {/* 3. CTA Buttons (delay: 0.30s) */}
+            {/* 4. CTA Buttons Container (delay: 0.66s) */}
             <motion.div
-              initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 24 }}
-              animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.3, ease: easeCurve }}
+              {...textMotionProps(3)}
               style={{
                 paddingTop: "12px",
                 display: "flex",
@@ -132,11 +172,23 @@ export default function Hero() {
                 alignItems: "center",
                 gap: "14px",
                 width: "100%",
+                willChange: "transform, opacity",
               }}
             >
               {/* Primary Gold CTA */}
-              <a
+              <motion.a
                 href="#contact"
+                whileHover={
+                  shouldReduceMotion
+                    ? undefined
+                    : {
+                        y: -2,
+                        backgroundColor: "#eabf34",
+                        boxShadow: "0 6px 20px rgba(245, 200, 66, 0.4)",
+                      }
+                }
+                whileTap={shouldReduceMotion ? undefined : { scale: 0.97 }}
+                transition={buttonTapTransition}
                 style={{
                   display: "inline-flex",
                   alignItems: "center",
@@ -153,28 +205,34 @@ export default function Hero() {
                   lineHeight: "20px",
                   textDecoration: "none",
                   whiteSpace: "nowrap",
-                  transition: "all 0.25s ease",
                   boxShadow: "0 3px 12px rgba(245, 200, 66, 0.3)",
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.backgroundColor = "#eabf34";
-                  e.currentTarget.style.transform = "translateY(-1px)";
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.backgroundColor = "#F5C842";
-                  e.currentTarget.style.transform = "translateY(0px)";
                 }}
               >
                 <span>Book an Appointment</span>
                 <ArrowRight
-                  style={{ width: "15px", height: "15px", strokeWidth: 2.6, color: "#012779" }}
+                  style={{
+                    width: "15px",
+                    height: "15px",
+                    strokeWidth: 2.6,
+                    color: "#012779",
+                  }}
                   aria-hidden="true"
                 />
-              </a>
+              </motion.a>
 
               {/* Secondary Outline CTA */}
-              <a
+              <motion.a
                 href="#services"
+                whileHover={
+                  shouldReduceMotion
+                    ? undefined
+                    : {
+                        y: -2,
+                        backgroundColor: "rgba(255, 255, 255, 0.14)",
+                      }
+                }
+                whileTap={shouldReduceMotion ? undefined : { scale: 0.97 }}
+                transition={buttonTapTransition}
                 style={{
                   display: "inline-flex",
                   alignItems: "center",
@@ -191,27 +249,15 @@ export default function Hero() {
                   lineHeight: "20px",
                   textDecoration: "none",
                   whiteSpace: "nowrap",
-                  transition: "all 0.25s ease",
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.backgroundColor = "rgba(255, 255, 255, 0.12)";
-                  e.currentTarget.style.transform = "translateY(-1px)";
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.backgroundColor = "transparent";
-                  e.currentTarget.style.transform = "translateY(0px)";
                 }}
               >
                 Explore Services
-              </a>
+              </motion.a>
             </motion.div>
           </div>
 
-          {/* ── Right Column (Image with Mint Glow Blur & Border) ── */}
-          <motion.div
-            initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, scale: 0.97, y: 16 }}
-            animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, scale: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.45, ease: easeCurve }}
+          {/* ── Right Column (Hero Image with Blur-in from Above) ── */}
+          <div
             className="w-full lg:max-w-[500px] flex justify-center lg:justify-end relative"
             style={{
               flex: "1 1 0%",
@@ -237,8 +283,31 @@ export default function Hero() {
               }}
             />
 
-            {/* Rounded Border Box with Image */}
-            <div
+            {/* 1. Main Image Blur-in from Above */}
+            <motion.div
+              initial={
+                shouldReduceMotion
+                  ? { opacity: 0 }
+                  : {
+                      opacity: 0,
+                      y: isMobile ? -30 : -60,
+                      filter: isMobile ? "blur(8px)" : "blur(14px)",
+                    }
+              }
+              whileInView={
+                shouldReduceMotion
+                  ? { opacity: 1 }
+                  : {
+                      opacity: 1,
+                      y: 0,
+                      filter: "blur(0px)",
+                    }
+              }
+              viewport={viewportConfig}
+              transition={{
+                duration: shouldReduceMotion ? 0.2 : 1.0,
+                ease: motionEasing.entrance,
+              }}
               style={{
                 position: "relative",
                 zIndex: 1,
@@ -249,6 +318,7 @@ export default function Hero() {
                 boxShadow: "0px 20px 40px -10px rgba(0, 0, 0, 0.25)",
                 overflow: "hidden",
                 backgroundColor: "#203E7D",
+                willChange: "transform, opacity, filter",
               }}
             >
               <Image
@@ -264,25 +334,33 @@ export default function Hero() {
                   objectFit: "cover",
                 }}
               />
-            </div>
-          </motion.div>
+            </motion.div>
+          </div>
         </div>
       </section>
 
-      {/* ─── Golden Trust Strip ─── */}
-      <div
+      {/* ─── Golden Trust Strip (delay: 0.6s, y: 40, items stagger by 0.1s, y: 12) ─── */}
+      <motion.div
+        initial={
+          shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 40 }
+        }
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={viewportConfig}
+        transition={{
+          duration: shouldReduceMotion ? 0.2 : motionDurations.base,
+          delay: shouldReduceMotion ? 0 : 0.6,
+          ease: motionEasing.entrance,
+        }}
         style={{
           width: "100%",
           backgroundColor: "#F5C842",
           borderTop: "1px solid rgba(0, 69, 39, 0.12)",
+          willChange: "transform, opacity",
         }}
         aria-label="Trust highlights"
       >
         <div className="w-full px-4 sm:px-6 lg:px-8 py-3.5 sm:py-4">
-          <motion.div
-            initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 16 }}
-            animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.6, ease: easeCurve }}
+          <div
             style={{
               display: "flex",
               flexDirection: "row",
@@ -292,8 +370,25 @@ export default function Hero() {
               flexWrap: "wrap",
             }}
           >
-            {/* 500+ Five-Star Reviews */}
-            <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+            {/* 1. 500+ Five-Star Reviews (stagger item 1: y: 12) */}
+            <motion.div
+              initial={
+                shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 12 }
+              }
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={viewportConfig}
+              transition={{
+                duration: 0.4,
+                delay: shouldReduceMotion ? 0 : 1.1,
+                ease: motionEasing.entrance,
+              }}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "8px",
+                willChange: "transform, opacity",
+              }}
+            >
               <div style={{ display: "flex", gap: "2px" }}>
                 {Array.from({ length: 5 }).map((_, i) => (
                   <Star
@@ -320,7 +415,7 @@ export default function Hero() {
               >
                 500+ Five-Star Reviews
               </span>
-            </div>
+            </motion.div>
 
             {/* Divider */}
             <div
@@ -334,8 +429,25 @@ export default function Hero() {
               aria-hidden="true"
             />
 
-            {/* Certified Professionals */}
-            <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+            {/* 2. Certified Professionals (stagger item 2: y: 12) */}
+            <motion.div
+              initial={
+                shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 12 }
+              }
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={viewportConfig}
+              transition={{
+                duration: 0.4,
+                delay: shouldReduceMotion ? 0 : 1.2,
+                ease: motionEasing.entrance,
+              }}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "8px",
+                willChange: "transform, opacity",
+              }}
+            >
               <ShieldCheck
                 style={{
                   width: "18px",
@@ -356,7 +468,7 @@ export default function Hero() {
               >
                 Certified Professionals
               </span>
-            </div>
+            </motion.div>
 
             {/* Divider */}
             <div
@@ -370,8 +482,25 @@ export default function Hero() {
               aria-hidden="true"
             />
 
-            {/* Fear-Free Certified */}
-            <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+            {/* 3. Fear-Free Certified (stagger item 3: y: 12) */}
+            <motion.div
+              initial={
+                shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 12 }
+              }
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={viewportConfig}
+              transition={{
+                duration: 0.4,
+                delay: shouldReduceMotion ? 0 : 1.3,
+                ease: motionEasing.entrance,
+              }}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "8px",
+                willChange: "transform, opacity",
+              }}
+            >
               <Heart
                 style={{
                   width: "18px",
@@ -392,10 +521,12 @@ export default function Hero() {
               >
                 Fear-Free Certified
               </span>
-            </div>
-          </motion.div>
+            </motion.div>
+          </div>
         </div>
-      </div>
+      </motion.div>
     </>
   );
 }
+
+

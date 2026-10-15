@@ -1,6 +1,8 @@
 import Reveal from "@/components/ui/Reveal";
+import ReviewMarquee, { ReviewItem } from "@/components/ui/ReviewMarquee";
 
-const testimonials = [
+// Placeholders to replace with real client reviews
+const reviews: ReviewItem[] = [
   {
     id: "testimonial-1",
     quote:
@@ -28,40 +30,69 @@ const testimonials = [
     initials: "AW",
     avatarBg: "#203E7D",
   },
+  // The following 5 reviews are placeholders to be replaced with real reviews:
+  {
+    id: "testimonial-4",
+    quote:
+      "The emergency care team was incredible when Milo got injured. So calm, fast, and caring.",
+    quoteColor: "#0F8B8D",
+    author: "Carlos Mendez & Milo",
+    initials: "CM",
+    avatarBg: "#F0C051",
+  },
+  {
+    id: "testimonial-5",
+    quote:
+      "Gentle handling and serene clinic vibes. My timid rescue cat felt relaxed for the first time.",
+    quoteColor: "#FF8A65",
+    author: "Sarah Jenkins & Bella",
+    initials: "SJ",
+    avatarBg: "#203E7D",
+  },
+  {
+    id: "testimonial-6",
+    quote:
+      "Thorough diagnostics and honest recommendations. We wouldn't trust our pup with anyone else.",
+    quoteColor: "#0F8B8D",
+    author: "David Patel & Oliver",
+    initials: "DP",
+    avatarBg: "#F0C051",
+  },
+  {
+    id: "testimonial-7",
+    quote:
+      "Dental surgery was seamless and recovery was quick. Their follow-up checkups were exceptional.",
+    quoteColor: "#FF8A65",
+    author: "Emily Clark & Cooper",
+    initials: "EC",
+    avatarBg: "#203E7D",
+  },
+  {
+    id: "testimonial-8",
+    quote:
+      "Warm greetings at the front desk and expert medical care every visit. Outstanding clinic all around.",
+    quoteColor: "#0F8B8D",
+    author: "Tariq Al-Mansoor & SimSim",
+    initials: "TA",
+    avatarBg: "#F0C051",
+  },
 ];
-
-function QuoteIcon({ color }: { color: string }) {
-  return (
-    <svg
-      width="46"
-      height="33"
-      viewBox="0 0 46 33"
-      fill={color}
-      xmlns="http://www.w3.org/2000/svg"
-      style={{ opacity: 0.2 }}
-      className="flex-shrink-0"
-      aria-hidden="true"
-    >
-      <path d="M12.6 32.5C5.6 32.5 0 26.9 0 19.9C0 11.2 6.5 3.5 16.2 0L19.4 4.5C12.5 7.4 8.6 11.9 8.1 16.5C9.5 15.8 11.1 15.4 12.8 15.4C18.6 15.4 23.3 20.1 23.3 25.9C23.3 29.5 20.4 32.5 16.8 32.5H12.6ZM35.3 32.5C28.3 32.5 22.7 26.9 22.7 19.9C22.7 11.2 29.2 3.5 38.9 0L42.1 4.5C35.2 7.4 31.3 11.9 30.8 16.5C32.2 15.8 33.8 15.4 35.5 15.4C41.3 15.4 46 20.1 46 25.9C46 29.5 43.1 32.5 39.5 32.5H35.3Z" />
-    </svg>
-  );
-}
 
 export default function Testimonials() {
   return (
     <section
       id="testimonials"
-      className="relative w-full bg-[#C8D3EA] py-14 lg:py-20 scroll-mt-[80px]"
+      className="relative w-full bg-[#C8D3EA] py-14 lg:py-20 scroll-mt-[80px] overflow-hidden"
       style={{ backgroundColor: "#C8D3EA" }}
       aria-labelledby="testimonials-heading"
     >
-      <div className="w-full px-4 sm:px-6 lg:px-8 flex flex-col items-center">
-        {/* Heading */}
+      <div className="w-full flex flex-col items-center">
+        {/* Section Heading */}
         <Reveal
           delay={0}
           y={24}
           duration={0.6}
-          className="w-full text-center mb-10 lg:mb-14"
+          className="w-full text-center mb-8 sm:mb-10 lg:mb-12 px-4 sm:px-6 lg:px-8"
         >
           <h2
             id="testimonials-heading"
@@ -72,77 +103,8 @@ export default function Testimonials() {
           </h2>
         </Reveal>
 
-        {/* Testimonials Cards Grid */}
-        <div className="w-full grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 justify-center items-stretch">
-          {testimonials.map((item, idx) => (
-            <Reveal
-              as="article"
-              key={item.id}
-              id={item.id}
-              delay={idx * 0.1}
-              duration={0.6}
-              y={24}
-              className="relative bg-white rounded-[24px] p-6 sm:p-7 flex flex-col justify-between shadow-sm h-full card-interactive-hover"
-              style={{
-                backgroundColor: "#FFFFFF",
-                borderRadius: "24px",
-                isolation: "isolate",
-              }}
-              aria-label={`Testimonial from ${item.author}`}
-            >
-              {/* Quote Mark Icon in Top-Right */}
-              <div
-                className="absolute top-5 right-5 pointer-events-none z-0"
-              >
-                <QuoteIcon color={item.quoteColor} />
-              </div>
-
-              {/* Quote Text */}
-              <div className="relative z-10 mb-6 pr-6">
-                <p
-                  className="font-liberation italic font-normal text-[15px] sm:text-[16px] leading-[25px] text-[#3D4949] text-left"
-                  style={{ color: "#3D4949" }}
-                >
-                  {item.quote}
-                </p>
-              </div>
-
-              {/* Author Row */}
-              <div
-                className="relative z-10 flex flex-row items-center gap-3.5"
-              >
-                {/* Initials Avatar */}
-                <div
-                  className="w-[48px] h-[48px] rounded-full flex items-center justify-center flex-shrink-0"
-                  style={{
-                    backgroundColor: item.avatarBg,
-                    width: "48px",
-                    height: "48px",
-                    borderRadius: "9999px",
-                  }}
-                  aria-hidden="true"
-                >
-                  <span
-                    className="font-liberation font-bold text-[17px] leading-none text-white text-center select-none"
-                    style={{ color: "#FFFFFF" }}
-                  >
-                    {item.initials}
-                  </span>
-                </div>
-
-                {/* Author Name */}
-                <div className="flex flex-col items-start">
-                  <span
-                    className="font-liberation font-semibold text-[15px] leading-tight text-[#111D23]"
-                    style={{ color: "#111D23" }}
-                  >
-                    {item.author}
-                  </span>
-                </div>
-              </div>
-            </Reveal>
-          ))}
-        </div>
+        {/* Continuous sliding news-ticker marquee */}
+        <ReviewMarquee reviews={reviews} reverse={false} />
       </div>
     </section>
   );

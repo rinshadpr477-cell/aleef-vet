@@ -1,4 +1,21 @@
-import Reveal from "@/components/ui/Reveal";
+"use client";
+
+import React, { useState, useSyncExternalStore } from "react";
+import { motion, useReducedMotion } from "framer-motion";
+import {
+  motionDurations,
+  motionEasing,
+  motionStagger,
+  motionOffsets,
+  defaultViewport,
+} from "@/lib/motion";
+
+const subscribeResize = (callback: () => void) => {
+  window.addEventListener("resize", callback);
+  return () => window.removeEventListener("resize", callback);
+};
+const getMobileSnapshot = () => window.innerWidth < 768;
+const getMobileServerSnapshot = () => false;
 
 function AwardIcon() {
   return (
@@ -141,6 +158,7 @@ const features = [
     description:
       "Our team brings years of expertise to provide the best possible care for your pets.",
     iconBg: "rgba(240, 192, 81, 0.20)",
+    glowColor: "rgba(240, 192, 81, 0.55)",
   },
   {
     id: "modern-equipment",
@@ -149,6 +167,7 @@ const features = [
     description:
       "We use the latest veterinary technology for accurate diagnosis and effective treatments.",
     iconBg: "rgba(32, 62, 125, 0.20)",
+    glowColor: "rgba(32, 62, 125, 0.45)",
   },
   {
     id: "gentle-compassionate",
@@ -157,6 +176,7 @@ const features = [
     description:
       "Every pet is treated with the same love and kindness we give our own.",
     iconBg: "rgba(32, 62, 125, 0.20)",
+    glowColor: "rgba(32, 62, 125, 0.45)",
   },
   {
     id: "complete-pet-care",
@@ -165,95 +185,271 @@ const features = [
     description:
       "From routine check-ups to complex surgeries, we handle all your pet's needs under one roof.",
     iconBg: "rgba(240, 192, 81, 0.20)",
+    glowColor: "rgba(240, 192, 81, 0.55)",
   },
 ];
 
+function FeatureCard({
+  feature,
+  Icon,
+  initialX,
+  initialY,
+  cardDelay,
+  iconDelay,
+  titleDelay,
+  descDelay,
+  shouldReduceMotion,
+}: {
+  feature: (typeof features)[0];
+  Icon: React.ComponentType;
+  initialX: number;
+  initialY: number;
+  cardDelay: number;
+  iconDelay: number;
+  titleDelay: number;
+  descDelay: number;
+  shouldReduceMotion: boolean;
+}) {
+  const [isAnimating, setIsAnimating] = useState(true);
+
+  return (
+    <motion.article
+      id={feature.id}
+      initial={
+        shouldReduceMotion ? false : { opacity: 0, x: initialX, y: initialY }
+      }
+      whileInView={{ opacity: 1, x: 0, y: 0 }}
+      viewport={defaultViewport}
+      transition={{
+        duration: shouldReduceMotion ? 0.2 : 0.8,
+        delay: cardDelay,
+        ease: motionEasing.entrance,
+      }}
+      onAnimationComplete={() => setIsAnimating(false)}
+      className="h-full"
+      style={{
+        willChange: isAnimating ? "transform, opacity" : "auto",
+      }}
+      aria-label={feature.title}
+    >
+      {/* Inner card container handles hover lift & shadow without conflicting with entrance */}
+      <motion.div
+        whileHover={shouldReduceMotion ? undefined : "hover"}
+        initial="rest"
+        animate="rest"
+        variants={{
+          rest: {
+            y: 0,
+            boxShadow:
+              "0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1)",
+          },
+          hover: {
+            y: -6,
+            boxShadow:
+              "0 20px 32px -8px rgba(32, 62, 125, 0.18), 0 10px 16px -6px rgba(32, 62, 125, 0.1)",
+            transition: { duration: 0.25, ease: motionEasing.entrance },
+          },
+        }}
+        className="bg-white rounded-[24px] p-6 sm:p-7 flex flex-row items-start gap-4 sm:gap-5 h-full cursor-default"
+        style={{
+          backgroundColor: "#FFFFFF",
+          borderRadius: "24px",
+        }}
+      >
+        {/* Icon Circle with pop spring entrance & hover wiggle/glow */}
+        <motion.div
+          initial={
+            shouldReduceMotion ? false : { scale: 0, rotate: -20 }
+          }
+          whileInView={{ scale: 1, rotate: 0 }}
+          viewport={defaultViewport}
+          transition={
+            shouldReduceMotion
+              ? { duration: 0 }
+              : {
+                  type: "spring",
+                  stiffness: 260,
+                  damping: 15,
+                  delay: iconDelay,
+                }
+          }
+          variants={{
+            rest: {
+              rotate: 0,
+              boxShadow: "0 0 0px transparent",
+            },
+            hover: {
+              rotate: [0, -8, 8, 0],
+              boxShadow: `0 0 20px ${feature.glowColor}`,
+              transition: {
+                rotate: { duration: 0.5, ease: "easeInOut" },
+                boxShadow: { duration: 0.25 },
+              },
+            },
+          }}
+          className="w-[56px] h-[56px] rounded-full flex items-center justify-center flex-shrink-0"
+          style={{
+            backgroundColor: feature.iconBg,
+            width: "56px",
+            height: "56px",
+            borderRadius: "9999px",
+          }}
+          aria-hidden="true"
+        >
+          <Icon />
+        </motion.div>
+
+        {/* Content */}
+        <div className="flex flex-col items-start gap-2 flex-grow">
+          <motion.h3
+            initial={shouldReduceMotion ? false : { opacity: 0, y: 14 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={defaultViewport}
+            transition={{
+              duration: 0.4,
+              delay: titleDelay,
+              ease: motionEasing.entrance,
+            }}
+            className="font-quicksand font-bold text-lg sm:text-[20px] leading-snug text-[#203E7D]"
+            style={{ color: "#203E7D" }}
+          >
+            {feature.title}
+          </motion.h3>
+
+          <motion.p
+            initial={shouldReduceMotion ? false : { opacity: 0, y: 14 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={defaultViewport}
+            transition={{
+              duration: 0.4,
+              delay: descDelay,
+              ease: motionEasing.entrance,
+            }}
+            className="font-liberation font-normal text-[15px] sm:text-[16px] leading-[25px] text-[#3D4949]"
+            style={{ color: "#3D4949" }}
+          >
+            {feature.description}
+          </motion.p>
+        </div>
+      </motion.div>
+    </motion.article>
+  );
+}
+
 export default function WhyChooseUs() {
+  const shouldReduceMotion = useReducedMotion();
+  const isMobile = useSyncExternalStore(
+    subscribeResize,
+    getMobileSnapshot,
+    getMobileServerSnapshot
+  );
+
   return (
     <section
       id="why-choose-us"
-      className="relative w-full py-10 lg:py-16 bg-white scroll-mt-[80px]"
+      className="relative w-full py-10 lg:py-16 bg-white scroll-mt-[80px] overflow-x-clip"
       aria-labelledby="why-heading"
     >
       <div className="w-full px-4 sm:px-6 lg:px-8">
-        {/* Outer rounded panel */}
-        <div
+        {/* Outer rounded panel with entrance scale and opacity */}
+        <motion.div
+          initial={shouldReduceMotion ? false : { opacity: 0, scale: 0.96 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={defaultViewport}
+          transition={{
+            duration: shouldReduceMotion ? 0.2 : motionDurations.base,
+            ease: motionEasing.entrance,
+          }}
           className="w-full rounded-[28px] sm:rounded-[36px] lg:rounded-[44px] py-10 lg:py-14 px-5 sm:px-7 lg:px-8 flex flex-col items-center"
           style={{
             backgroundColor: "rgba(32, 62, 125, 0.2)",
             borderRadius: "40px",
           }}
         >
-        {/* Section Heading */}
-        <Reveal
-          delay={0}
-          y={24}
-          duration={0.6}
-          className="w-full text-center mb-8 lg:mb-12"
-        >
-          <h2
-            id="why-heading"
-            className="font-quicksand font-bold text-[#203E7D] text-2xl sm:text-3xl lg:text-[36px] leading-tight text-center"
-            style={{ color: "#203E7D" }}
+          {/* Section Heading with Animated Hand-drawn Underline */}
+          <motion.div
+            initial={shouldReduceMotion ? false : { opacity: 0, y: motionOffsets.y }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={defaultViewport}
+            transition={{
+              duration: shouldReduceMotion ? 0.2 : motionDurations.base,
+              ease: motionEasing.entrance,
+            }}
+            className="w-full text-center mb-8 lg:mb-12"
           >
-            Why Choose Aleef Veterinary?
-          </h2>
-        </Reveal>
-
-        {/* 2x2 Feature Cards Grid */}
-        <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-5 lg:gap-6">
-          {features.map((feature, idx) => {
-            const Icon = feature.icon;
-            return (
-              <Reveal
-                as="article"
-                key={feature.id}
-                id={feature.id}
-                delay={idx * 0.1}
-                duration={0.6}
-                y={24}
-                className="bg-white rounded-[24px] p-6 sm:p-7 flex flex-row items-start gap-4 sm:gap-5 shadow-sm h-full card-interactive-hover"
-                style={{
-                  backgroundColor: "#FFFFFF",
-                  borderRadius: "24px",
-                }}
-                aria-label={feature.title}
-              >
-                {/* Icon Circle */}
-                <div
-                  className="w-[56px] h-[56px] rounded-full flex items-center justify-center flex-shrink-0"
-                  style={{
-                    backgroundColor: feature.iconBg,
-                    width: "56px",
-                    height: "56px",
-                    borderRadius: "9999px",
-                  }}
+            <h2
+              id="why-heading"
+              className="font-quicksand font-bold text-[#203E7D] text-2xl sm:text-3xl lg:text-[36px] leading-tight text-center"
+              style={{ color: "#203E7D" }}
+            >
+              Why Choose{" "}
+              <span className="relative inline-block whitespace-normal sm:whitespace-nowrap">
+                Aleef Veterinary?
+                <svg
+                  className="absolute -bottom-2 sm:-bottom-2.5 left-0 w-full h-[10px] sm:h-[12px] overflow-visible pointer-events-none"
+                  viewBox="0 0 260 12"
+                  fill="none"
+                  preserveAspectRatio="none"
+                  xmlns="http://www.w3.org/2000/svg"
                   aria-hidden="true"
                 >
-                  <Icon />
-                </div>
+                  <motion.path
+                    d="M 3 7 C 70 2, 170 3, 257 9"
+                    stroke="#F7C83F"
+                    strokeWidth="3.5"
+                    strokeLinecap="round"
+                    initial={
+                      shouldReduceMotion
+                        ? { pathLength: 1, opacity: 1 }
+                        : { pathLength: 0, opacity: 0 }
+                    }
+                    whileInView={{ pathLength: 1, opacity: 1 }}
+                    viewport={defaultViewport}
+                    transition={{
+                      pathLength: {
+                        duration: 0.8,
+                        delay: 0.4,
+                        ease: motionEasing.entrance,
+                      },
+                      opacity: { duration: 0.1, delay: 0.4 },
+                    }}
+                  />
+                </svg>
+              </span>
+            </h2>
+          </motion.div>
 
-                {/* Content */}
-                <div className="flex flex-col items-start gap-2 flex-grow">
-                  <h3
-                    className="font-quicksand font-bold text-lg sm:text-[20px] leading-snug text-[#203E7D]"
-                    style={{ color: "#203E7D" }}
-                  >
-                    {feature.title}
-                  </h3>
-                  <p
-                    className="font-liberation font-normal text-[15px] sm:text-[16px] leading-[25px] text-[#3D4949]"
-                    style={{ color: "#3D4949" }}
-                  >
-                    {feature.description}
-                  </p>
-                </div>
-              </Reveal>
-            );
-          })}
-        </div>
+          {/* 2x2 Feature Cards Grid */}
+          <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-5 lg:gap-6">
+            {features.map((feature, idx) => {
+              const Icon = feature.icon;
+
+              // Corner converge offsets based on grid index
+              const initialX = isMobile ? 0 : idx % 2 === 0 ? -motionOffsets.x : motionOffsets.x;
+              const initialY = isMobile ? motionOffsets.yMobile : idx < 2 ? -50 : 50;
+              const cardDelay = idx * motionStagger.cards;
+              const iconDelay = cardDelay + (isMobile ? 0.25 : 0.35);
+              const titleDelay = iconDelay + 0.12;
+              const descDelay = titleDelay + 0.08;
+
+              return (
+                <FeatureCard
+                  key={feature.id}
+                  feature={feature}
+                  Icon={Icon}
+                  initialX={initialX}
+                  initialY={initialY}
+                  cardDelay={cardDelay}
+                  iconDelay={iconDelay}
+                  titleDelay={titleDelay}
+                  descDelay={descDelay}
+                  shouldReduceMotion={!!shouldReduceMotion}
+                />
+              );
+            })}
+          </div>
+        </motion.div>
       </div>
-    </div>
-  </section>
+    </section>
   );
 }

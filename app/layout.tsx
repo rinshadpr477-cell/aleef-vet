@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Poppins, Quicksand } from "next/font/google";
 import Preloader from "@/components/ui/Preloader";
+import ScrollProgress from "@/components/ui/ScrollProgress";
 import "./globals.css";
 
 const poppins = Poppins({
@@ -63,6 +64,7 @@ export default function RootLayout({
           <style>{`.reveal-init { opacity: 1 !important; transform: none !important; }`}</style>
         </noscript>
         <Preloader />
+        <ScrollProgress />
         {children}
       </body>
     </html>

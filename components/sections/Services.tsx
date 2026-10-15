@@ -1,8 +1,22 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useSyncExternalStore } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import Reveal from "@/components/ui/Reveal";
+import {
+  motionDurations,
+  motionEasing,
+  motionStagger,
+  motionOffsets,
+  defaultViewport,
+} from "@/lib/motion";
+
+const subscribeResize = (callback: () => void) => {
+  window.addEventListener("resize", callback);
+  return () => window.removeEventListener("resize", callback);
+};
+const getMobileSnapshot = () => window.innerWidth < 768;
+const getMobileServerSnapshot = () => false;
 
 function ScissorsIcon() {
   return (
@@ -151,16 +165,11 @@ const services = [
 
 export default function Services() {
   const shouldReduceMotion = useReducedMotion();
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-    checkMobile();
-    window.addEventListener("resize", checkMobile);
-    return () => window.removeEventListener("resize", checkMobile);
-  }, []);
+  const isMobile = useSyncExternalStore(
+    subscribeResize,
+    getMobileSnapshot,
+    getMobileServerSnapshot
+  );
 
   const half = services.length / 2;
 
@@ -175,8 +184,8 @@ export default function Services() {
         {/* Section Header */}
         <Reveal
           delay={0}
-          y={24}
-          duration={0.6}
+          y={motionOffsets.y}
+          duration={motionDurations.base}
           className="w-full text-center mb-10 lg:mb-14 flex flex-col items-center gap-3"
         >
           <h2
@@ -199,7 +208,7 @@ export default function Services() {
           {services.map((service, idx) => {
             const Icon = service.icon;
             const isLeft = idx < half;
-            const initialX = isLeft ? -80 : 80;
+            const initialX = isLeft ? -motionOffsets.x : motionOffsets.x;
 
             return (
               <motion.article
@@ -209,7 +218,7 @@ export default function Services() {
                   shouldReduceMotion
                     ? { opacity: 0 }
                     : isMobile
-                    ? { opacity: 0, y: 30 }
+                    ? { opacity: 0, y: motionOffsets.yMobile }
                     : { opacity: 0, x: initialX }
                 }
                 whileInView={
@@ -219,11 +228,11 @@ export default function Services() {
                     ? { opacity: 1, y: 0 }
                     : { opacity: 1, x: 0 }
                 }
-                viewport={{ once: true, margin: "-80px" }}
+                viewport={defaultViewport}
                 transition={{
-                  duration: shouldReduceMotion ? 0.2 : 0.7,
-                  delay: idx * 0.12,
-                  ease: "easeOut",
+                  duration: shouldReduceMotion ? 0.2 : motionDurations.base,
+                  delay: idx * motionStagger.cards,
+                  ease: motionEasing.entrance,
                 }}
                 className="h-full flex"
               >
