@@ -1,5 +1,4 @@
-import CardReveal from "@/components/ui/CardReveal";
-import ScrollReveal from "@/components/ui/ScrollReveal";
+import Reveal from "@/components/ui/Reveal";
 
 function ScissorsIcon() {
   return (
@@ -156,9 +155,10 @@ export default function Services() {
     >
       <div className="w-full px-4 sm:px-6 lg:px-8 flex flex-col items-center">
         {/* Section Header */}
-        <ScrollReveal
+        <Reveal
           delay={0}
-          y={16}
+          y={24}
+          duration={0.6}
           className="w-full text-center mb-10 lg:mb-14 flex flex-col items-center gap-3"
         >
           <h2
@@ -174,23 +174,21 @@ export default function Services() {
           >
             We offer a full spectrum of veterinary services designed to address every aspect of your pet&apos;s health.
           </p>
-        </ScrollReveal>
+        </Reveal>
 
         {/* 4 Cards Grid */}
         <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 items-stretch">
           {services.map((service, idx) => {
             const Icon = service.icon;
             return (
-              <CardReveal
+              <Reveal
                 as="article"
                 key={service.id}
                 id={service.id}
-                delay={idx * 80}
-                duration={520}
-                y={16}
-                threshold={0.15}
-                interactiveHover={true}
-                className="bg-white rounded-[24px] p-6 sm:p-7 flex flex-col items-start gap-4 shadow-sm hover:shadow-md h-full"
+                delay={idx * 0.1}
+                duration={0.6}
+                y={24}
+                className="bg-white rounded-[24px] p-6 sm:p-7 flex flex-col items-start gap-4 shadow-sm h-full card-interactive-hover"
                 style={{
                   backgroundColor: "#FFFFFF",
                   border: "1px solid rgba(2, 35, 107, 0.12)",
@@ -232,7 +230,7 @@ export default function Services() {
                     {service.description}
                   </p>
                 </div>
-              </CardReveal>
+              </Reveal>
             );
           })}
         </div>

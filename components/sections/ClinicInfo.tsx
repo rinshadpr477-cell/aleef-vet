@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { MapPin, Phone, Clock } from "lucide-react";
-import ScrollReveal from "@/components/ui/ScrollReveal";
+import Reveal from "@/components/ui/Reveal";
 
 export default function ClinicInfo() {
   return (
@@ -12,9 +12,10 @@ export default function ClinicInfo() {
     >
       <div className="w-full px-4 sm:px-6 lg:px-8 flex flex-col items-center">
         {/* Header Container */}
-        <ScrollReveal
+        <Reveal
           delay={0}
-          y={16}
+          y={24}
+          duration={0.6}
           className="w-full text-center mb-10 lg:mb-14 flex flex-col items-center gap-3"
         >
           <h2
@@ -30,14 +31,15 @@ export default function ClinicInfo() {
           >
             Visit our modern clinic in the heart of Abu Dhabi.
           </p>
-        </ScrollReveal>
+        </Reveal>
 
         {/* Content Columns: Left Map + Right Contact Info */}
         <div className="w-full flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-14">
           {/* Left Column: Map */}
-          <ScrollReveal
+          <Reveal
             delay={0}
-            y={16}
+            y={24}
+            duration={0.6}
             className="relative w-full lg:max-w-[540px] h-[300px] sm:h-[380px] lg:h-[440px] rounded-[24px] overflow-hidden group shadow-sm flex-shrink-0"
             style={{
               borderRadius: "24px",
@@ -60,12 +62,13 @@ export default function ClinicInfo() {
                 priority
               />
             </a>
-          </ScrollReveal>
+          </Reveal>
 
           {/* Right Column: Contact Info */}
-          <ScrollReveal
-            delay={80}
-            y={16}
+          <Reveal
+            delay={0.15}
+            y={24}
+            duration={0.6}
             className="flex flex-col items-start gap-7 w-full lg:max-w-[580px]"
           >
             {/* Info Items List */}
@@ -217,7 +220,7 @@ export default function ClinicInfo() {
                 />
               </svg>
             </a>
-          </ScrollReveal>
+          </Reveal>
         </div>
       </div>
     </section>

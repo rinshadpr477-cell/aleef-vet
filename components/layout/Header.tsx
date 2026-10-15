@@ -15,10 +15,13 @@ const navLinks = [
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeNav, setActiveNav] = useState("#home");
+  const [scrolled, setScrolled] = useState(false);
 
   // Keep active nav indicator synchronized with scroll position
   useEffect(() => {
     const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
+
       const sectionIds = ["contact", "clinic-info", "team", "about", "services", "home"];
       const scrollPosition = window.scrollY + 100;
 
@@ -58,8 +61,13 @@ export default function Header() {
         right: 0,
         zIndex: 50,
         height: "72px",
-        backgroundColor: "#F8FAF5",
-        boxShadow: "0px 1px 3px rgba(0, 0, 0, 0.05)",
+        backgroundColor: scrolled ? "rgba(248, 250, 245, 0.95)" : "#F8FAF5",
+        backdropFilter: scrolled ? "blur(10px)" : "none",
+        WebkitBackdropFilter: scrolled ? "blur(10px)" : "none",
+        boxShadow: scrolled
+          ? "0 4px 20px -2px rgba(0, 38, 121, 0.08), 0 2px 6px -1px rgba(0, 0, 0, 0.04)"
+          : "0px 1px 3px rgba(0, 0, 0, 0.05)",
+        transition: "all 250ms ease",
         display: "flex",
         alignItems: "center",
       }}

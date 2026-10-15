@@ -1,5 +1,4 @@
-import CardReveal from "@/components/ui/CardReveal";
-import ScrollReveal from "@/components/ui/ScrollReveal";
+import Reveal from "@/components/ui/Reveal";
 
 function AwardIcon() {
   return (
@@ -186,9 +185,10 @@ export default function WhyChooseUs() {
           }}
         >
         {/* Section Heading */}
-        <ScrollReveal
+        <Reveal
           delay={0}
-          y={16}
+          y={24}
+          duration={0.6}
           className="w-full text-center mb-8 lg:mb-12"
         >
           <h2
@@ -198,23 +198,21 @@ export default function WhyChooseUs() {
           >
             Why Choose Aleef Veterinary?
           </h2>
-        </ScrollReveal>
+        </Reveal>
 
         {/* 2x2 Feature Cards Grid */}
         <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-5 lg:gap-6">
           {features.map((feature, idx) => {
             const Icon = feature.icon;
             return (
-              <CardReveal
+              <Reveal
                 as="article"
                 key={feature.id}
                 id={feature.id}
-                delay={idx * 80}
-                duration={520}
-                y={16}
-                threshold={0.15}
-                interactiveHover={true}
-                className="bg-white rounded-[24px] p-6 sm:p-7 flex flex-row items-start gap-4 sm:gap-5 shadow-sm hover:shadow-md h-full"
+                delay={idx * 0.1}
+                duration={0.6}
+                y={24}
+                className="bg-white rounded-[24px] p-6 sm:p-7 flex flex-row items-start gap-4 sm:gap-5 shadow-sm h-full card-interactive-hover"
                 style={{
                   backgroundColor: "#FFFFFF",
                   borderRadius: "24px",
@@ -250,7 +248,7 @@ export default function WhyChooseUs() {
                     {feature.description}
                   </p>
                 </div>
-              </CardReveal>
+              </Reveal>
             );
           })}
         </div>

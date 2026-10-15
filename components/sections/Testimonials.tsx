@@ -1,5 +1,4 @@
-import CardReveal from "@/components/ui/CardReveal";
-import ScrollReveal from "@/components/ui/ScrollReveal";
+import Reveal from "@/components/ui/Reveal";
 
 const testimonials = [
   {
@@ -58,9 +57,10 @@ export default function Testimonials() {
     >
       <div className="w-full px-4 sm:px-6 lg:px-8 flex flex-col items-center">
         {/* Heading */}
-        <ScrollReveal
+        <Reveal
           delay={0}
-          y={16}
+          y={24}
+          duration={0.6}
           className="w-full text-center mb-10 lg:mb-14"
         >
           <h2
@@ -70,21 +70,19 @@ export default function Testimonials() {
           >
             What Pet Owners Say
           </h2>
-        </ScrollReveal>
+        </Reveal>
 
         {/* Testimonials Cards Grid */}
         <div className="w-full grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 justify-center items-stretch">
           {testimonials.map((item, idx) => (
-            <CardReveal
+            <Reveal
               as="article"
               key={item.id}
               id={item.id}
-              delay={idx * 80}
-              duration={520}
-              y={16}
-              threshold={0.15}
-              interactiveHover={true}
-              className="relative bg-white rounded-[24px] p-6 sm:p-7 flex flex-col justify-between shadow-sm hover:shadow-md h-full"
+              delay={idx * 0.1}
+              duration={0.6}
+              y={24}
+              className="relative bg-white rounded-[24px] p-6 sm:p-7 flex flex-col justify-between shadow-sm h-full card-interactive-hover"
               style={{
                 backgroundColor: "#FFFFFF",
                 borderRadius: "24px",
@@ -142,7 +140,7 @@ export default function Testimonials() {
                   </span>
                 </div>
               </div>
-            </CardReveal>
+            </Reveal>
           ))}
         </div>
       </div>

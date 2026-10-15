@@ -5,7 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { Headset, CheckCircle, AlertCircle, Loader2, ChevronDown } from "lucide-react";
 import { contactSchema, type ContactFormData } from "@/lib/validation";
-import ScrollReveal from "@/components/ui/ScrollReveal";
+import Reveal from "@/components/ui/Reveal";
 
 const serviceOptions = [
   { value: "grooming", label: "Grooming" },
@@ -75,9 +75,10 @@ export default function Contact() {
       <div className="w-full px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col lg:flex-row items-center justify-between gap-10 lg:gap-16">
           {/* Left Column: Heading, Subtitle & Expert Support Card */}
-          <ScrollReveal
+          <Reveal
             delay={0}
-            y={16}
+            y={24}
+            duration={0.6}
             className="flex flex-col items-start gap-5 lg:gap-6 w-full lg:max-w-[560px]"
           >
             {/* Heading */}
@@ -124,12 +125,13 @@ export default function Contact() {
                 questions about our services and pet care.
               </p>
             </div>
-          </ScrollReveal>
+          </Reveal>
 
           {/* Right Column: Contact Form Card */}
-          <ScrollReveal
-            delay={80}
-            y={16}
+          <Reveal
+            delay={0.15}
+            y={24}
+            duration={0.6}
             className="w-full lg:max-w-[580px] bg-white rounded-[24px] p-6 sm:p-8 lg:p-9 relative flex-shrink-0"
             style={{
               backgroundColor: "#FFFFFF",
@@ -181,7 +183,7 @@ export default function Contact() {
                     type="text"
                     placeholder="Your Name"
                     {...register("ownerName")}
-                    className={`w-full h-[46px] sm:h-[48px] px-4 rounded-full bg-white font-quicksand text-sm sm:text-[15px] placeholder:text-[#6B7280] text-[#191C19] outline-none transition-colors border ${
+                    className={`w-full h-[46px] sm:h-[48px] px-4 rounded-full bg-white font-quicksand text-sm sm:text-[15px] placeholder:text-[#6B7280] text-[#191C19] outline-none transition-all duration-200 focus:ring-2 focus:ring-[#203E7D]/20 border ${
                       errors.ownerName
                         ? "border-red-400 focus:border-red-500"
                         : "border-[rgba(191,201,191,0.5)] focus:border-[#203E7D]"
@@ -208,7 +210,7 @@ export default function Contact() {
                     type="email"
                     placeholder="your@email.com"
                     {...register("email")}
-                    className={`w-full h-[46px] sm:h-[48px] px-4 rounded-full bg-white font-quicksand text-sm sm:text-[15px] placeholder:text-[#6B7280] text-[#191C19] outline-none transition-colors border ${
+                    className={`w-full h-[46px] sm:h-[48px] px-4 rounded-full bg-white font-quicksand text-sm sm:text-[15px] placeholder:text-[#6B7280] text-[#191C19] outline-none transition-all duration-200 focus:ring-2 focus:ring-[#203E7D]/20 border ${
                       errors.email
                         ? "border-red-400 focus:border-red-500"
                         : "border-[rgba(191,201,191,0.5)] focus:border-[#203E7D]"
@@ -238,7 +240,7 @@ export default function Contact() {
                     type="text"
                     placeholder="Pet's Name"
                     {...register("petName")}
-                    className={`w-full h-[46px] sm:h-[48px] px-4 rounded-full bg-white font-quicksand text-sm sm:text-[15px] placeholder:text-[#6B7280] text-[#191C19] outline-none transition-colors border ${
+                    className={`w-full h-[46px] sm:h-[48px] px-4 rounded-full bg-white font-quicksand text-sm sm:text-[15px] placeholder:text-[#6B7280] text-[#191C19] outline-none transition-all duration-200 focus:ring-2 focus:ring-[#203E7D]/20 border ${
                       errors.petName
                         ? "border-red-400 focus:border-red-500"
                         : "border-[rgba(191,201,191,0.5)] focus:border-[#203E7D]"
@@ -264,7 +266,7 @@ export default function Contact() {
                     <select
                       id="service"
                       {...register("service")}
-                      className="w-full h-[46px] sm:h-[48px] px-4 pr-10 rounded-full bg-white font-quicksand text-sm sm:text-[15px] text-[#191C19] outline-none transition-colors border border-[rgba(191,201,191,0.5)] focus:border-[#203E7D] appearance-none cursor-pointer"
+                      className="w-full h-[46px] sm:h-[48px] px-4 pr-10 rounded-full bg-white font-quicksand text-sm sm:text-[15px] text-[#191C19] outline-none transition-all duration-200 focus:ring-2 focus:ring-[#203E7D]/20 border border-[rgba(191,201,191,0.5)] focus:border-[#203E7D] appearance-none cursor-pointer"
                     >
                       {serviceOptions.map((opt) => (
                         <option key={opt.value} value={opt.value}>
@@ -296,7 +298,7 @@ export default function Contact() {
                   rows={4}
                   placeholder="How can we help?"
                   {...register("message")}
-                  className={`w-full h-[110px] p-3.5 rounded-[18px] bg-white font-quicksand text-sm sm:text-[15px] placeholder:text-[#6B7280] text-[#191C19] outline-none transition-colors border resize-none ${
+                  className={`w-full h-[110px] p-3.5 rounded-[18px] bg-white font-quicksand text-sm sm:text-[15px] placeholder:text-[#6B7280] text-[#191C19] outline-none transition-all duration-200 focus:ring-2 focus:ring-[#203E7D]/20 border resize-none ${
                     errors.message
                       ? "border-red-400 focus:border-red-500"
                       : "border-[rgba(191,201,191,0.5)] focus:border-[#203E7D]"
@@ -339,7 +341,7 @@ export default function Contact() {
                 )}
               </button>
             </form>
-          </ScrollReveal>
+          </Reveal>
         </div>
       </div>
     </section>

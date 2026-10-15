@@ -2,9 +2,13 @@
 
 import Image from "next/image";
 import { Star, ShieldCheck, Heart, ArrowRight } from "lucide-react";
-import ScrollReveal from "@/components/ui/ScrollReveal";
+import { motion, useReducedMotion } from "framer-motion";
 
 export default function Hero() {
+  const shouldReduceMotion = useReducedMotion();
+
+  const easeCurve = [0.25, 0.1, 0.25, 1] as const;
+
   return (
     <>
       {/* ─── Hero Section ─── */}
@@ -48,12 +52,11 @@ export default function Hero() {
               gap: "20px",
             }}
           >
-            {/* Header Text Group */}
-            <ScrollReveal
-              immediate
-              delay={0}
-              y={16}
-              duration={550}
+            {/* 1. Heading & Eyebrow (delay: 0s) */}
+            <motion.div
+              initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 24 }}
+              animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0, ease: easeCurve }}
               style={{
                 display: "flex",
                 flexDirection: "column",
@@ -96,30 +99,32 @@ export default function Hero() {
                   <span style={{ color: "#F0C051" }}>Every Step</span> of the Way.
                 </span>
               </h1>
+            </motion.div>
 
-              {/* From kitten visits to senior care... */}
-              <p
-                style={{
-                  fontFamily: "var(--font-quicksand), 'Quicksand', sans-serif",
-                  fontWeight: 500,
-                  fontSize: "clamp(15px, 1.4vw, 17px)",
-                  lineHeight: "26px",
-                  color: "rgba(255, 255, 255, 0.9)",
-                  margin: 0,
-                  maxWidth: "480px",
-                }}
-              >
-                From kitten visits to senior care, we provide compassionate, modern
-                veterinary services to keep your furry family members healthy and happy.
-              </p>
-            </ScrollReveal>
+            {/* 2. Paragraph (delay: 0.15s) */}
+            <motion.p
+              initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 24 }}
+              animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.15, ease: easeCurve }}
+              style={{
+                fontFamily: "var(--font-quicksand), 'Quicksand', sans-serif",
+                fontWeight: 500,
+                fontSize: "clamp(15px, 1.4vw, 17px)",
+                lineHeight: "26px",
+                color: "rgba(255, 255, 255, 0.9)",
+                margin: 0,
+                maxWidth: "480px",
+              }}
+            >
+              From kitten visits to senior care, we provide compassionate, modern
+              veterinary services to keep your furry family members healthy and happy.
+            </motion.p>
 
-            {/* CTA Buttons */}
-            <ScrollReveal
-              immediate
-              delay={100}
-              y={16}
-              duration={550}
+            {/* 3. CTA Buttons (delay: 0.30s) */}
+            <motion.div
+              initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 24 }}
+              animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.3, ease: easeCurve }}
               style={{
                 paddingTop: "12px",
                 display: "flex",
@@ -199,15 +204,14 @@ export default function Hero() {
               >
                 Explore Services
               </a>
-            </ScrollReveal>
+            </motion.div>
           </div>
 
           {/* ── Right Column (Image with Mint Glow Blur & Border) ── */}
-          <ScrollReveal
-            immediate
-            delay={160}
-            y={16}
-            duration={550}
+          <motion.div
+            initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, scale: 0.97, y: 16 }}
+            animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, scale: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.45, ease: easeCurve }}
             className="w-full lg:max-w-[500px] flex justify-center lg:justify-end relative"
             style={{
               flex: "1 1 0%",
@@ -261,7 +265,7 @@ export default function Hero() {
                 }}
               />
             </div>
-          </ScrollReveal>
+          </motion.div>
         </div>
       </section>
 
@@ -275,11 +279,10 @@ export default function Hero() {
         aria-label="Trust highlights"
       >
         <div className="w-full px-4 sm:px-6 lg:px-8 py-3.5 sm:py-4">
-          <ScrollReveal
-            immediate
-            delay={240}
-            y={10}
-            duration={500}
+          <motion.div
+            initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 16 }}
+            animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.6, ease: easeCurve }}
             style={{
               display: "flex",
               flexDirection: "row",
@@ -390,7 +393,7 @@ export default function Hero() {
                 Fear-Free Certified
               </span>
             </div>
-          </ScrollReveal>
+          </motion.div>
         </div>
       </div>
     </>
